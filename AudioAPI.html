@@ -1,0 +1,26 @@
+<html>
+
+
+<head></head>
+<body>
+
+<script src="./audio_mgr.js"></script>
+
+<script type="text/javascript">
+var sound_mgr = new SoundMgr();
+sound_mgr.init();
+
+function kakunin(){
+	sound_mgr.poi_sound.start(0);
+	sound_mgr.hearhear_sound.start(0);
+}
+</script>
+
+<form name="test">
+<input type="button" value="POI" onClick="kakunin()">
+</form>
+
+
+
+</body>
+</html>
