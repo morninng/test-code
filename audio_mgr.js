@@ -2,7 +2,6 @@
 function SoundMgr(){
 
 	var self = this;
-
 	self.poi_sound = null;
 	self.hearhear_sound = null;
 	self.booboo_sound = null;
@@ -34,11 +33,20 @@ SoundMgr.prototype.finishedLoading = function(bufferList) {
   self.booboo_sound = self.context.createBufferSource();
 
   self.poi_sound.buffer = bufferList[0];
+  self.persisted_poi_sound_buffer = bufferList[0];
   self.hearhear_sound.buffer = bufferList[1];
+  self.persisted_hearhear_sound_buffer = bufferList[1];
   self.poi_sound.connect(self.context.destination);
   self.hearhear_sound.connect(self.context.destination);
 
- // self.poi_sound.start(0);
+}
+SoundMgr.prototype.play_poi = function(){
+	var self = this;
+	self.poi_sound.start(0);
+
+	self.poi_sound = self.context.createBufferSource();
+	self.poi_sound.buffer = self.persisted_poi_sound_buffer;
+	self.poi_sound.connect(self.context.destination);
 }
 
 
