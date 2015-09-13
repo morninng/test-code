@@ -1,0 +1,152 @@
+<html>
+<head>  
+
+<style>
+
+#impression_container {
+	display:flex;
+	direction:row;
+	width:200px;
+	justify-content:space-around;
+	background-color: #FFE4E1;
+}
+.hearhear {
+
+}
+
+.booboo{
+
+}
+.impression_ul{
+	padding-left: 0;
+	list-style: none;
+	margin-top:0px;
+	margin-bottom:0px;
+	text-align:center;
+}
+
+.impression_member_img{
+	padding:5px;
+}
+
+#hearhear_img{
+	width:50px;
+	height:50px;
+	padding:5px;
+}
+
+#booboo_img{
+	width:50px;
+	height:50px;
+	padding:5px;
+}
+
+</style>
+
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.3.0/knockout-min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="./sound_mgr.js"></script>
+
+</head>
+<body>
+
+	
+	
+
+	<div id="impression_container">
+		<div class="hearhear">
+			<input type="image" id="hearhear_img" src="https://s3.amazonaws.com/mixidea/good.png" onclick="imp_obj.click_hearhear()">
+			<ul class="impression_ul" data-bind="foreach:{data:hearhear_users, beforeRemove:remove_fadeout } ">
+				<li><img class="impression_member_img" data-bind="attr: {src:pict_src}"></li>
+			</ul>
+		</div>
+		<div class="booboo">
+			<input type="image" id="booboo_img" src="https://s3.amazonaws.com/mixidea/bad.png" onclick="imp_obj.click_booboo()">
+			<ul class="impression_ul" data-bind="foreach:{data:booboo_users, beforeRemove:remove_fadeout } ">
+				<li><img class="impression_member_img" data-bind="attr: {src:pict_src}"></li>
+			</ul>
+		</div>
+	</div>
+
+<script>
+
+var imp_obj = new show_impression_pict();
+ko.applyBindings(imp_obj);
+
+var sound_mgr = new SoundMgr();
+sound_mgr.init();
+
+function show_impression_pict(){
+
+	var self = this;
+	self.hearhear_users = ko.observableArray();
+	self.booboo_users = ko.observableArray();
+
+	self.remove_fadeout = function(elem){
+		var self = this;
+		$(elem).fadeOut();
+	}
+}
+
+show_impression_pict.prototype.click_hearhear = function(){
+
+	var self = this;
+	var unique_id = get_guid();
+	var src = "./searchimage2.jpg";
+	var object = {id:unique_id, pict_src:src};
+	self.hearhear_users.push(object);
+
+	var timer; 
+	timer = setTimeout(function(){self.remove_hearhear(object)},1000);
+	sound_mgr.play_sound_heahear();
+}
+
+
+show_impression_pict.prototype.click_booboo = function(){
+
+	var self = this;
+	var unique_id = get_guid();
+	var src = "./booboo.jpg";
+	var object = {id:unique_id, pict_src:src};
+	self.booboo_users.push(object);
+
+	var timer; 
+	timer = setTimeout(function(){self.remove_booboo(object)},1000);
+	sound_mgr.play_sound_booboo();
+}
+
+
+
+show_impression_pict.prototype.remove_hearhear = function(object){
+	var self = this;
+	self.hearhear_users.remove(object);
+}
+
+show_impression_pict.prototype.remove_booboo = function(object){
+	var self = this;
+	self.booboo_users.remove(object);
+}
+
+
+show_impression_pict.prototype.click_add_booboo = function(){
+	var self = this;
+}
+
+
+function get_guid() {
+  function s4() {
+    return Math.floor((1 + Math.random()) * 0x10000)
+      .toString(16)
+      .substring(1);
+  }
+  return s4() + s4();
+}
+
+
+
+</script>
+
+
+</body>
+</html>

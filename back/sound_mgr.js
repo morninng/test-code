@@ -5,8 +5,20 @@ function SoundMgr(){
 	self.poi_sound = null;
 	self.hearhear_sound = null;
 	self.booboo_sound = null;
-
 }
+
+
+
+SoundMgr.prototype.play_sound_poi = function(){
+  var self = this;
+  self.poi_sound.start(0);
+
+  self.poi_sound = self.context.createBufferSource();
+  self.poi_sound.buffer = self.persisted_poi_sound_buffer;
+  self.poi_sound.connect(self.context.destination);
+}
+
+
 
 SoundMgr.prototype.init = function(){
 
@@ -40,14 +52,7 @@ SoundMgr.prototype.finishedLoading = function(bufferList) {
   self.hearhear_sound.connect(self.context.destination);
 
 }
-SoundMgr.prototype.play_poi = function(){
-	var self = this;
-	self.poi_sound.start(0);
 
-	self.poi_sound = self.context.createBufferSource();
-	self.poi_sound.buffer = self.persisted_poi_sound_buffer;
-	self.poi_sound.connect(self.context.destination);
-}
 
 
 
