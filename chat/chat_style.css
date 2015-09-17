@@ -59,7 +59,7 @@ body{
 
 
 
-.msg_a{
+.chat_msg_other{
 	position:relative;
 	background:#FDE4CE;
 	padding:10px;
@@ -68,7 +68,7 @@ body{
 	margin-right:10px;
 	border-radius:5px;
 }
-.msg_a:before{
+.chat_msg_other:before{
 	content:"";
 	position:absolute;
 	width:0px;
@@ -80,7 +80,7 @@ body{
 }
 
 
-.msg_b{
+.chat_msg_own{
 	background:#EEF2E7;
 	padding:10px;
 	min-height:15px;
@@ -89,7 +89,7 @@ body{
 	margin-left:10px;
 	border-radius:5px;
 }
-.msg_b:after{
+.chat_msg_own:after{
 	content:"";
 	position:absolute;
 	width:0px;

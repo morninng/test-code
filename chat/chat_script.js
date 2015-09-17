@@ -21,7 +21,7 @@ $(document).ready(function(){
             var msg = $(this).val();
 			$(this).val('');
 			if(msg!='')
-			$('<div class="msg_b">'+msg+'</div>').insertBefore('.msg_push');
+			$('<div class="chat_msg_own">'+msg+'</div>').insertBefore('.msg_push');
 			$('.msg_body').scrollTop($('.msg_body')[0].scrollHeight);
         }
     });
