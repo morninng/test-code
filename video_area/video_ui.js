@@ -18,6 +18,10 @@ function VideoViewModel(){
 
 /*complete button*/
   self.visible_complete_button = ko.observable(true);
+  self.click_complete_speech = function(data, event){
+    console.log(data)
+  }
+  
 /*video dummy area*/
   self.video_canvas_style_str = ko.observable();
 
@@ -45,9 +49,6 @@ function VideoViewModel(){
   }
 
 
-  self.click_complete_speech = function(data, event){
-    console.log(data)
-  }
 
 }
 
