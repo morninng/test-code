@@ -1,42 +1,4 @@
 
-
-/*
-$(document).ready(function(){
-
-
-	$('.msg_head').click(function(){
-		$('.msg_wrap').slideToggle('slow');
-	});
-	
-	$('.close').click(function(){
-		$('.msg_box').hide();
-	});
-
-	$('.close').click(function(){
-		$('.msg_wrap').slideDown('slow');
-	});
-
-
-	$('.user').click(function(){
-
-		$('.msg_wrap').show();
-		$('.msg_box').show();
-	});
-	
-	$('textarea').keypress(
-    function(e){
-        if (e.keyCode == 13) {
-            var msg = $(this).val();
-			$(this).val('');
-			if(msg!='')
-			$('<div class="chat_msg_own">'+msg+'</div>').insertBefore('.msg_push');
-			$('.msg_body').scrollTop($('.msg_body')[0].scrollHeight);
-        }
-    });
-	
-});
-*/
-
 function chat_box(){
 
 	var self = this;
@@ -72,8 +34,6 @@ chat_box.prototype.click_collapse = function(){
 	 $('#msg_wrap').slideUp("slow");
 	self.visible_maximize_button(true);
 	self.visible_collapse_button(false);
-
-
 }
 
 chat_box.prototype.click_expand = function(){

@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
 
-    <link href="./chat_style.css" rel="stylesheet">
+    <link href="./test_chat_style.css" rel="stylesheet">
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.3.0/knockout-min.js"></script>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
@@ -18,12 +18,12 @@
 				<span data-bind="text:chat_header_title"></span>
 				<div class="window_icon" data-bind="visible:visible_collapse_button">
 					<div class="collapse" data-bind="event:{click:click_collapse}">
-						<img src="./minimize2.png">
+						<img src="https://s3.amazonaws.com/mixidea/minimize.png">
 					</div>
 				</div>
 				<div class="window_icon" data-bind="visible:visible_maximize_button">
 					<div class="collapse" data-bind="event:{click:click_expand}">
-						<img src="./maximize.png">
+						<img src="https://s3.amazonaws.com/mixidea/maximize.png">
 					</div>
 				</div>
 			</div>
@@ -48,7 +48,7 @@
 	  
 
 
-	<script src="./chat_script.js"></script>
+	<script src="./test_chat_script.js"></script>
 
 	<script>
 		var chat_view_model = new chat_box();

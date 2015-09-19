@@ -6,15 +6,6 @@ body{
 	font-family: sans-serif;
 }
 
-.msg_head{
-	background:#4e69a2;
-	color:white;
-	padding:8px;
-	font-weight:bold;
-	cursor:pointer;
-	border-radius:5px 5px 0px 0px;
-	text-align:center;
-}
 
 .msg_box{
 	position:fixed;
@@ -25,8 +16,19 @@ body{
 	z-index: 2;
 }
 
+.msg_head{
+	background:#4e69a2;
+	color:white;
+	padding:8px;
+	font-weight:bold;
+	cursor:pointer;
+	border-radius:5px 5px 0px 0px;
+	text-align:center;
+}
+
 
 .msg_body{
+	left:20px;
 	background:white;
 	height:150px;
 	font-size:12px;
@@ -42,9 +44,6 @@ body{
 	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
 	box-sizing: border-box;  
 }
-
-
-
 
 
 .chat_msg_other{
