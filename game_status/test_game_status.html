@@ -102,7 +102,7 @@
 </script>
 
 
-<script type="text/template" data-template="preparation_direction_template">
+<script type="text/template" data-template="introduction_direction_template">
   <div id="direction_container">
   	<div>
       <p>set preparation time</p>
@@ -120,8 +120,23 @@
   	</div>
   	<div class="direction button">
       <p>when everything is ready, debater should start preparation</p>
-  		<button class="btn btn-primary"> Start Preparation</button>
+  		<button class="btn btn-success"> Start Preparation</button>
   	</div>
+  </div>
+</script>
+
+
+<script type="text/template" data-template="preparation_direction_template">
+  <div id="direction_container">
+    <div id="preparation_time">
+      <p>preparation time spent</p>
+      <span >10:20</span>
+    </div>
+    <div class="direction button">
+      <p>Click here! after all attendance came back and preparation has expired</p>
+      <button class="btn btn-success"> Start Debate!</button>
+    </div>
+
   </div>
 </script>
 
@@ -188,7 +203,7 @@
 	   <li><img src="searchimage2.jpg"> Mayuko</li>
 	   <li><img src="booboo.jpg"> Yuta</li>
 	   <li><img src="searchimage2.jpg"> Mayuko</li>
-	   <li><img src="booboo.jpg"> Yuta<li>
+	   <li><img src="booboo.jpg"> Yuta</li>
 	   <li><img src="searchimage2.jpg"> Mayuko</li>
 	 </ul>
    </div>
@@ -205,6 +220,63 @@
 	 	<li>update the role unless all debaters are not loged in</li>
 	 </ul>
 	 <p>after these points has been completed, you can start preparation</p>
+ </div>
+</script>
+
+<script type="text/template" data-template="prep_info_debater_template">
+ <div id="info_prep">
+   <div id="link_team_room">
+       <div>
+       link to <strong> team discussion room </strong> for Government
+       <img src="https://ssl.gstatic.com/s2/oz/images/stars/hangout/1/gplus-hangout-24x100-normal.png"
+      alt="Start a Hangout"
+      style="border:0;width:100px;height:24px;"/>
+      </div>
+   </div>
+   <p>What you should do before debate</p>
+   <ul>
+    <li>Debater should go to <strong> Team Discussion Room </strong> and construct argument</li>
+   </ul>
+   <p>How to go to <strong> Team Discussion Room</strong></p>
+   <ul>
+    <li>Click HangoutButton on the right</li>
+    <li>After new window has opened, click Join button</li>
+    <li>Following button appear and you should chose right button "Close existing window"</li>
+    <li>Wait your partner to come and construct your argument together</li>
+   </ul>
+ </div>
+</script>
+
+
+<script type="text/template" data-template="prep_info_audience_template">
+ <div id="info_prep">
+   <div id="link_team_room">
+       <div>
+       link to <strong> team discussion room </strong> for <strong>Government</strong>
+       <img src="https://ssl.gstatic.com/s2/oz/images/stars/hangout/1/gplus-hangout-24x100-normal.png"
+      alt="Start a Hangout"
+      style="border:0;width:100px;height:24px;"/>
+      </div>
+       <div>
+       link to <strong> team discussion room </strong> for <strong>Opposition</strong>
+       <img src="https://ssl.gstatic.com/s2/oz/images/stars/hangout/1/gplus-hangout-24x100-normal.png"
+      alt="Start a Hangout"
+      style="border:0;width:100px;height:24px;"/>
+      </div>
+   </div>
+   <p>What you should do before debate</p>
+   <ul>
+    <li>Audience can remain here and talk with other audiences</li>
+    <li>if you want to see how debater construct the argument you can go to debater <strong> Team Discussion Room </strong>, however audience should be silent and should not write anything there.</li>
+
+   </ul>
+   <p>How to go to <strong> Team Discussion Room</strong></p>
+   <ul>
+    <li>Click HangoutButton on the right</li>
+    <li>After new window has opened, click Join button</li>
+    <li>Following button appear and you should chose right button "Close existing window"</li>
+    <li>Wait your partner to come and construct your argument together</li>
+   </ul>
  </div>
 </script>
 
@@ -263,7 +335,13 @@
 <script src="test_appmgt.js"></script>
 
 <script>
-window.onload = construct_layout_introduction();
+window.onload = function(){
+
+  var dom_constructor = new construct_layout();
+   dom_constructor.update_structure("preparation");
+  // dom_constructor.update_structure("introduction");
+
+}
 
 </script>
 
