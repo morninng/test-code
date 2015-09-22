@@ -22,7 +22,6 @@ body{
 	color:white;
 	padding:8px;
 	font-weight:bold;
-	cursor:pointer;
 	border-radius:5px 5px 0px 0px;
 	text-align:center;
 }
@@ -112,4 +111,7 @@ body{
 .window_icon img{
 	display:block !important;
 	visibility:visible !important;
+	cursor:pointer;
+	width:22px;
+	height:22px;
 }

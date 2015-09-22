@@ -2,6 +2,14 @@
 
 #container_top {
 	width:100%;
+	display:flex;
+}
+
+#top_left{
+	flex:1;
+}
+#top_right{
+	
 }
 
 #container_second_top {
@@ -34,7 +42,6 @@
 }
 #container_main_left_above_right{ 
 	/*Direction Bar*/
-	/*display: table-cell;*/
 	width:300px;
 	vertical-align: top;
 }

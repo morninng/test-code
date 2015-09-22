@@ -11,6 +11,8 @@
 	<link rel="stylesheet" href="./../../parse_mixidea/public/style/video_ui.css">
 	<link rel="stylesheet" href="./../../parse_mixidea/public/style/title.css">
   <link rel="stylesheet" href="./../../parse_mixidea/public/style/game_status.css">
+  <link rel="stylesheet" href="./../../parse_mixidea/public/style/argument.css">
+  <link rel="stylesheet" href="./../../parse_mixidea/public/style/general_concept.css">
 
 
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
@@ -26,7 +28,8 @@
 <div id="inner_whole">
 
   <div id="container_top">
-	    <div id = "title_area"></div>
+	    <div id = "top_left"></div>
+      <div id = "top_right"></div>
   </div>
 
   <div id="container_second_top">
@@ -120,7 +123,7 @@
   	</div>
   	<div class="direction button">
       <p>when everything is ready, debater should start preparation</p>
-  		<button class="btn btn-success"> Start Preparation</button>
+  		<button id="start_prep_button" class="btn btn-success"> Start Preparation</button>
   	</div>
   </div>
 </script>
@@ -134,7 +137,7 @@
     </div>
     <div class="direction button">
       <p>Click here! after all attendance came back and preparation has expired</p>
-      <button class="btn btn-success"> Start Debate!</button>
+      <button id="start_debate_button" class="btn btn-success"> Start Debate!</button>
     </div>
 
   </div>
@@ -330,16 +333,195 @@
 </script>
 
 
+<script type="text/template" data-template="DebaterNote_template">
+  <div id="general_concept_pain"></div>
+  <div id="argument_list"></div>
+</script>
+
+
+
+<script type="text/template" data-template="general_concept_template">
+    <div class='Concept'>
+      <p class="concept_title">General Concept</p>
+      <div class="concept_container">
+        <div class="concept_left">
+          <div class="concept_text_container">
+           <textarea class="general_concept_input" placeholder="input social background for your arguments, definition or teamstance should also be written here"></textarea>
+          </div>
+        </div>
+        <div class="concept_right">
+          <div class="Concept_editor_info">
+            <div >
+              <img  src="./searchimage2.jpg"><br>
+              Yuta Moriyama
+            </div>
+          </div>
+          <div class="Concept_button">
+            <div>
+              <button>save</button>
+            </div>
+          </div>
+          <div class="Concept_loading" >
+            <div class="spinner">
+              <div class="bounce1"></div>
+              <div class="bounce2"></div>
+              <div class="bounce3"></div>
+              <div class="bounce4"></div>
+              <div class="bounce5"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</script>
+
+
+
+
+
+
+<script type="text/template" data-template="argument_template">
+  <div class = "argument_element">
+    <h2>Argumet</h2>
+    <div id='Arg_<%= Argument_ID %>'>
+
+      <div class="title">
+        <div class="title_left">
+          <div>
+            <p>Title: <input class="ArgTitle_Input_default" placeholder="input title of the argument" type="text" ></input></p>
+          </div>
+          <div class="arg_title_loading" >
+            <div  class="spinner">
+              <div class="bounce1"></div>
+              <div class="bounce2"></div>
+              <div class="bounce3"></div>
+              <div class="bounce4"></div>
+              <div class="bounce5"></div>
+            </div>
+          </div>
+
+
+        </div>
+        <div class="arg_title_right">
+          <div class="arg_editor_info">
+            <div>
+              <img  src="./searchimage2.jpg"><br>
+              <span></span>
+            </div>
+          </div>
+          <div class="arg_title_button">
+            <div>
+              <button >save</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="main_arg">
+        <div class="MainArg_left">
+          <div>Content</div>
+          <div>
+           <textarea class="MainArgDefault_input"></textarea>
+          </div>
+          <div class="MainArg_loading" >
+            <div class="spinner">
+              <div class="bounce1"></div>
+              <div class="bounce2"></div>
+              <div class="bounce3"></div>
+              <div class="bounce4"></div>
+              <div class="bounce5"></div>
+            </div>
+          </div>
+        </div>
+        <div class="MainArg_right">
+          <div class="MainArg_editor_info">
+            <div>
+              <img  src="./searchimage2.jpg"><br>
+              <span> Yuta</span>
+            </div>
+          </div>
+          <div class="MainArg_button">
+            <div data-bind="visible:visible_button_MainArg_save">
+              <button data-bind="click:click_main_save">save</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div  class="arg_comment">
+        <p>Comment</p>
+        <ul class="arg_comment_ul">
+          <li class="arg_comment_list">
+            <div class="arg_comment_left">
+              <img  src="./searchimage2.jpg">
+            </div>
+            <div class="arg_comment_center">
+              <div>
+                <div class="arg_comment_txt"><strong><span >Yuta</span> : </strong><span>AAAAAAA</span></div>
+              </div>
+            </div>
+            <div class="arg_comment_right">
+              <div class="comment_button">
+                <div>
+                  <button>edit</button>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="comment_input">
+        <div>
+             comment: <textarea class="argument_comment_input"></textarea><br>
+             <div align="right">
+                <button>Add</button>
+             </div>
+        </div>
+      </div>
+      <hr>
+    </div>
+  </div>
+</script>
+
+
+
+
+
+<script type="text/template" data-template="goto_reflection_template">
+  <div id="goto_reflection">
+  After all speech over, go to reflection
+      <button id="start_reflec_button" class="btn btn-success"> Goto Reflection</button>
+  </div>
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <script src="./../chat/test_chat_script.js"></script>
 <script src="test_appmgt.js"></script>
+<script src="test_game_status.js"></script>
 
 <script>
-window.onload = function(){
 
   var dom_constructor = new construct_layout();
-   dom_constructor.update_structure("preparation");
-  // dom_constructor.update_structure("introduction");
+
+window.onload = function(){
+
+ //  dom_constructor.update_structure("introduction");
+ //  dom_constructor.update_structure("preparation");
+   dom_constructor.update_structure("debate");
+
+   var game_status_mgr = new Game_Status_Mgr();
+   game_status_mgr.initialize();
 
 }
 

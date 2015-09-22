@@ -1,77 +1,66 @@
 function Game_Status_Mgr(){
 	var self = this;
 	// var self.timer;
-	self.status = null;
-	self.timer = null;
 
 
 }
 
 Game_Status_Mgr.prototype.initialize = function(){
 	var self = this;
-
-	self.status = appmgr.actual_game_obj.get("game_status");
-	if(!status_num){
-	    self.status = "introduction";
-	}
-	self.show_status_bar()
+	self.$el_start_prep_container = $("#container_main_left_above_right");
+	self.$el_start_debate_container = $("#container_main_left_above_right");
+	self.$el_start_reflec_container = $("#top_right");
+	self.handleEvents()
 }
+Game_Status_Mgr.prototype.handleEvents = function(){
+	var self = this;
+	self.$el_start_prep_container.on("click","#start_prep_button", function(e){self.click_PrepStart();});
+	self.$el_start_debate_container.on("click","#start_debate_button", function(e){self.click_DebateStart();});
+	self.$el_start_reflec_container.on("click","#start_reflec_button", function(e){self.click_ReflecStart();});
+}
+
+
 
 Game_Status_Mgr.prototype.show_status_bar = function(){
 
-	switch(self.status){
-		case "introduction":
-
-		break;
-		case "preparation":
-
-		break;
-		case "debate":
-
-
-		break;
-		case "evaluation":
-
-		break;
-		case "complete":
-
-		break;
-
+	//ゆくゆくはここに、ステータスバーの色変更ロジックももってくる。
 
 }
 
-Game_Status_Mgr.prototype.handleEvents = function(){
-
-
-}
 
 
 Game_Status_Mgr.prototype.click_PrepStart = function() {
 	var self = this;
 	console.log("preparation start")
+
+   dom_constructor.update_structure("preparation");
 	//start_timer();
-	self.update_server_status("preparation");
+	//self.update_server_status("preparation");
 }
 
 
-Game_Status_Mgr.prototype.click_PrepFinish = function() {
+Game_Status_Mgr.prototype.click_DebateStart = function() {
 	var self = this;
-	console.log("prep finish");
-	self.update_server_status("debate");
+	console.log("debate start");
+	//self.update_server_status("debate");
+
+   dom_constructor.update_structure("debate");
 
 }
 
-Game_Status_Mgr.prototype.click_EvalStart = function() {
+Game_Status_Mgr.prototype.click_ReflecStart = function() {
 	var self = this;
-	console.log("eval start");
-	self.update_server_status("evaluation");
+	console.log("reflec start");
+	//self.update_server_status("evaluation");
+   dom_constructor.update_structure("introduction");
+
 
 }
 
 Game_Status_Mgr.prototype.click_GameComplete = function() {
 	var self = this;
 	console.log("game complete");
-	self.update_server_status("complete");
+	//self.update_server_status("complete");
 
 }
 
@@ -87,13 +76,6 @@ Game_Status_Mgr.prototype.update_server_status = function(str_status) {
 	appmgr.actual_game_obj.set("game_status", str_status);
 	appmgr.actual_game_obj.save(null, {
 	  success: function(obj) {
-	  	/*
-	  	var counter = get_game_status_counter();
-	  	counter++;
-	  	var counter_str = String(counter);
-		gapi.hangout.data.submitDelta({
-		   "game_status_counter":counter_str
-		});*/
 
 		var parse_data_counter = get_parse_data_changed_counter();
 		if(!parse_data_counter){
@@ -104,10 +86,6 @@ Game_Status_Mgr.prototype.update_server_status = function(str_status) {
 	    gapi.hangout.data.submitDelta({
 		        "parse_data_changed_counter":parse_data_counter_str
 		});
-
-
-
-
 	  },
 	  error: function(obj, error) {
 
@@ -128,46 +106,18 @@ Game_Status_Mgr.prototype.apply_updated_status = function() {
 
 Game_Status_Mgr.prototype.apply_status = function(status_num) {
 	var self = this;
-
 	self.reflesh_status();
-
 	switch(status_num){
 		case "introduction":
-
-		self.game_status_message("introduction: you can introduce each other with the participants");
-		self.indicate_class_introduction("game_status_indicate_focusued");
-		self.count_timer_hide();
-	//	appmgr.chat_view_model.unvisible_hangout_button();
-
 		break;
 		case "preparation":
-		self.indicate_class_preparation("game_status_indicate_focusued");
-		self.game_status_message("under preparation");
-		var start_time = appmgr.actual_game_obj.get("prep_start_time");
-		console.log(start_time);
-		self.count_timer_start(start_time);
-	//	appmgr.chat_view_model.visible_hangout_button();
-
 		break;
 		case "debate":
-		self.indicate_class_debate("game_status_indicate_focusued");
-		self.game_status_message("time to debate");
-		self.count_timer_hide();
-	//	appmgr.chat_view_model.unvisible_hangout_button();
-
 		break;
 		case "evaluation":
-		self.indicate_class_evaluation("game_status_indicate_focusued");
-		self.game_status_message("make a comment and discuss each other");
-		self.count_timer_hide();
-	//	appmgr.chat_view_model.unvisible_hangout_button();
-
 		break;
 		case "complete":
-	//	appmgr.chat_view_model.unvisible_hangout_button();
-
 		break;
-
 	}
 }
 
@@ -200,25 +150,10 @@ Game_Status_Mgr.prototype.count_timer_show = function(start_time) {
 }
 
 Game_Status_Mgr.prototype.count_timer_hide = function() {
-
 	var self = this;
 	self.preparation_time(null);
     clearInterval(self.timer);
-
 }
 
-Game_Status_Mgr.prototype.reflesh_status = function() {
-	var self = this;
-	self.indicate_class_introduction("game_status_indicate");
-	self.indicate_class_preparation("game_status_indicate");
-	self.indicate_class_debate("game_status_indicate");
-	self.indicate_class_evaluation("game_status_indicate");
-
-	self.prep_start_class();
-	self.prep_finish_class();
-	self.eval_start_class();
-	self.game_complete_class();
-
-}
 
 
