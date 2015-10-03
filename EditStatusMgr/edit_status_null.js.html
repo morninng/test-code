@@ -1,0 +1,68 @@
+
+<script>
+function DiscussNoteMgr() {
+
+  var self = this;
+  self.own_edit_status = "default";
+}
+
+DiscussNoteMgr.prototype.init = function(){
+	var self = this;
+	self.arg_obj_1 = new Argument_Mgr();
+	self.arg_obj_1.init(self);
+
+
+	self.arg_obj_2 = new Argument_Mgr();
+	self.arg_obj_2.init(self);
+
+}
+
+DiscussNoteMgr.prototype.update = function(value){
+
+  var self = this;
+	self.arg_obj_1.update(value);
+
+}
+DiscussNoteMgr.prototype.check = function(){
+
+  var self = this;
+	self.arg_obj_2.check();
+
+}
+
+
+
+function Argument_Mgr(){
+	
+}
+
+Argument_Mgr.prototype.init = function(parent_discuss_ref){
+
+
+	var self = this;
+	self.parent_discuss_ref = parent_discuss_ref;
+	parent_discuss_ref = null;
+
+}
+
+Argument_Mgr.prototype.update = function(value){
+	var self = this;
+	self.parent_discuss_ref.own_edit_status = value;
+
+}
+
+Argument_Mgr.prototype.check = function(){
+	var self = this;
+	console.log(self.parent_discuss_ref.own_edit_status);
+	
+
+}
+
+
+var discussion_obj = new DiscussNoteMgr();
+discussion_obj.init();
+discussion_obj.update("debate");
+discussion_obj.check();
+
+
+</script>

@@ -111,13 +111,13 @@ construct_layout.prototype.construct_layout_debate = function(){
 
 construct_layout.prototype.construct_layout_introduction = function(){
 
+    var self = this;
 
     $("#container_main_left_above_right").css('display','');
     $("#container_main_left_below").css('display','');
     $("#top_right").html("");
 
 
-    var self = this;
 	var Title_html_Template = _.template($('[data-template="title_template"]').html());
     var title_element = $("#top_left");
     var Title_html_text = Title_html_Template();
@@ -138,9 +138,6 @@ construct_layout.prototype.construct_layout_introduction = function(){
     var impression_html_text = Impression_html_Template();
     impression_element.html(impression_html_text);
 
-    // var left_height = $("#container_main_left_above_left_below").height() + $("#container_main_left_above_left_up").height();
-
-    // $("#container_main_left_above_right").height(left_height);
     $("#container_main_left_above_right").height(230);
     $("#container_main_left_above_right").width(250);
 	var PrepDirect_html_Template = _.template($('[data-template="introduction_direction_template"]').html());
@@ -187,6 +184,7 @@ construct_layout.prototype.construct_layout_introduction = function(){
 
 construct_layout.prototype.construct_layout_preparation = function(){
 
+    var self = this;
 
     $("#container_main_left_above_right").css('display','');
     $("#container_main_left_below").css('display','');
@@ -238,11 +236,6 @@ construct_layout.prototype.construct_layout_preparation = function(){
 
 
 
-
-
-
-
-
 /* ********** */
     $("#container_main_left_above_right").height(230);
     $("#container_main_left_above_right").width(250);
@@ -254,7 +247,6 @@ construct_layout.prototype.construct_layout_preparation = function(){
 
     $("#container_main_left_below").width(550);
     intro_info_html_Template = _.template($('[data-template="prep_info_audience_template"]').html());
-//    intro_info_html_Template = _.template($('[data-template="prep_info_debater_template"]').html());
     var intro_info_element = $("#container_main_left_below");
     var intro_info_html_text = intro_info_html_Template();
     intro_info_element.html(intro_info_html_text);

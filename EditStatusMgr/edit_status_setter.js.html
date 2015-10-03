@@ -1,0 +1,76 @@
+
+<script>
+
+var edit_status_setter;
+var edit_status_getter;
+
+function DiscussNoteMgr() {
+
+  var self = this;
+  self.own_edit_status = "default";
+  edit_status_setter = function(value){
+  	self.own_edit_status = value;
+  };
+  edit_status_getter = function(){
+  	return self.own_edit_status;
+  };
+}
+
+DiscussNoteMgr.prototype.init = function(init_value){
+	var self = this;
+	self.name = init_value;
+	self.arg_obj_1 = new Argument_Mgr();
+
+	self.arg_obj_2 = new Argument_Mgr();
+
+}
+
+DiscussNoteMgr.prototype.update = function(value){
+
+  var self = this;
+	self.arg_obj_1.update(value);
+
+
+}
+DiscussNoteMgr.prototype.check = function(){
+
+  var self = this;
+	self.arg_obj_2.check();
+
+}
+
+
+
+function Argument_Mgr(){
+	
+}
+
+
+
+Argument_Mgr.prototype.update = function(value){
+	var self = this;
+	edit_status_setter(value);
+
+}
+
+Argument_Mgr.prototype.check = function(){
+	var self = this;
+	console.log(edit_status_getter());
+	
+
+}
+
+
+var discussion_obj = new DiscussNoteMgr();
+discussion_obj.init("1");
+discussion_obj.update("debate");
+discussion_obj.check();
+
+var discussion_obj_2 = new DiscussNoteMgr();
+discussion_obj_2.init("2");
+discussion_obj_2.update("reflection");
+discussion_obj_2.check();
+discussion_obj.check();
+
+
+</script>
