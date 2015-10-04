@@ -9,9 +9,22 @@
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+
+
+	<style>
+#video_area_container{ 
+	width:300px;
+	height:100px;
+	float:left;
+}
+
+</style>
+
 	</head>
 
   <body>
+
+  	<div id="video_area_container"></div>
  aa bb cc dd ee ff gg hh ii jj kk  aa bb cc dd ee ff gg hh ii jj kk  aa bb cc dd ee ff gg hh ii jj kk  aa bb cc dd ee ff gg hh ii jj kk  aa bb cc dd ee ff gg hh ii jj kk  aa bb cc dd ee ff gg hh ii jj kk  aa bb cc dd ee ff gg hh ii jj kk  aa bb cc dd ee ff gg hh ii jj kk  aa bb cc dd ee ff gg hh ii jj kk  aa bb cc dd ee ff gg hh ii jj kk  aa bb cc dd ee ff gg hh ii jj kk  aa bb cc dd ee ff gg hh ii jj kk  aa bb cc dd ee ff gg hh ii jj kk  aa bb cc dd ee ff gg hh ii jj kk  aa bb cc dd ee ff gg hh ii jj kk  aa bb cc dd ee ff gg hh ii jj kk  aa bb cc dd ee ff gg hh ii jj kk  aa bb cc dd ee ff gg hh ii jj kk  aa bb cc dd ee ff gg hh ii jj kk  aa bb cc dd ee ff gg hh ii jj kk  aa bb cc dd ee ff gg hh ii jj kk  aa bb cc dd ee ff gg hh ii jj kk  aa bb cc dd ee ff gg hh ii jj kk  aa bb cc dd ee ff gg hh ii jj kk  aa bb cc dd ee ff gg hh ii jj kk  aa bb cc dd ee ff gg hh ii jj kk  aa bb cc dd ee ff gg hh ii jj kk  aa bb cc dd ee ff gg hh ii jj kk  aa bb cc dd ee ff gg hh ii jj kk  aa bb cc dd ee ff gg hh ii jj kk  aa bb cc dd ee ff gg hh ii jj kk  aa bb cc dd ee ff gg hh ii jj kk  aa bb cc dd ee ff gg hh ii jj kk  aa bb cc dd ee ff gg hh ii jj kk  aa bb cc dd ee ff gg hh ii jj kk  aa bb cc dd ee ff gg hh ii jj kk  aa bb cc dd ee ff gg hh ii jj kk  aa bb cc dd ee ff gg hh ii jj kk  aa bb cc dd ee ff gg hh ii jj kk  aa bb cc dd ee ff gg hh ii jj kk  aa bb cc dd ee ff gg hh ii jj kk  aa bb cc dd ee ff gg hh ii jj kk  aa bb cc dd ee ff gg hh ii jj kk  aa bb cc dd ee ff gg hh ii jj kk v
 
 	<div id="chat_field">
@@ -62,22 +75,19 @@
 						<img src="https://s3.amazonaws.com/mixidea/Close.png">
 					</div>
 				</div>
-
 				<div class="window_icon_transcript" data-bind="visible:visible_collapse_button">
 					<div data-bind="event:{click:click_collapse}">
 						<img src="https://s3.amazonaws.com/mixidea/minimize.png">
 					</div>
 				</div>
-
 				<div class="window_icon_transcript" data-bind="visible:visible_maximize_button">
 					<div data-bind="event:{click:click_expand}">
 						<img src="https://s3.amazonaws.com/mixidea/maximize.png">
 					</div>
 				</div>
-
 			</div>
 			<div id="transcription_wrap">
-				<div class="transcript_body">
+				<div class="transcript_body" data-bind="event: { mouseover: mouseover_trans_field, mouseout: mouseout_trans_field }">
 				  <ul data-bind="foreach: transcript_message_array">
 				  	<li>
 		              <div data-bind="css:transcription_box_class">
@@ -104,6 +114,28 @@
 
 		var transcript_obj = new transcript_box_wrapper();
 		transcript_obj.show("#absolute_pain");
+		transcript_obj.hide();
+		transcript_obj.show("#absolute_pain");
+
+
+		var transcription_default_size = 600;
+
+		var transcription_left_position = $('#transcript_box').position().left;
+		var transcription_width = $('#transcript_box').width();
+		var transcription_right_position = transcription_left_position + transcription_width;
+		var expected_left_position = transcription_right_position - transcription_default_size
+		var video_transcript_margin = 20;
+
+		var video_width = $('#video_area_container').width();
+		var left_limit = video_width + video_transcript_margin;
+
+		if(left_limit>expected_left_position){
+				var next_transcription_width = transcription_default_size - (left_limit - expected_left_position);
+				$('#transcript_box').width(next_transcription_width);
+		}else{
+				$('#transcript_box').width(transcription_default_size);
+		}
+
 	</script>
 
   </body>
