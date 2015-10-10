@@ -1,0 +1,136 @@
+<html>
+
+<head>
+
+<link rel="stylesheet" href="./AfterDiscuss.css">
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+
+</head>
+<body>
+
+<div id="after_discuss_container">
+	<div id="related_link_container">
+		<p class="after_discuss_title">related link </p>
+		Let's investigate the information related to the motion and share each other
+		<div>
+			<ul data-bind="foreach:link_array">
+				<li>
+
+			    <div class="related_link_item">
+			      <div class="link_image">
+			        <img data-bind="attr:{src: img_src}">
+			      </div>
+			      <div class="related_link_text">
+			        <p>
+			        	<a data-bind="attr:{href: link_url}" target="_blank">
+			        		<span class="link_title" data-bind="html:title"></span> 
+			        	</a><br>
+			        	<span class="link_description" data-bind="html:description"></span><br>
+			        	<span class="link_site_name" data-bind="html:site_name"></span>
+			        </p>
+			      </div>
+			    </div>
+
+				</li>
+			</ul>
+		</div>
+		<div id="link_input">
+			<input type="text" class="link_input_style" placeholder="http://" data-bind="textInput: input_url, event:{keyup: onEnterLinkInput}" autofocus></input>
+		</div>
+	</div>
+
+
+
+	<div id="Prop_AfterDiscuss_container">
+		<p class="after_discuss_title">Additional Proposition Argument </p>
+		Think more argument and share each other
+		<div>
+			<ul data-bind="foreach:after_dis_prop_array">
+				<li>
+
+			    <div class="after_dis_item">
+			      <div class="user_field">
+			        <img data-bind="attr:{src: user_img_src}">
+			      	<span data-bind="text: user_name"></span>
+			        <div data-bind="visible:visible_edit_button">
+			        	<button class="btn btn-primary" data-bind="click:$parent.edit_content">edit</button>
+			        </div>
+			        <div data-bind="visible:visible_edit_context">
+			        	<br>
+			        	<button class="btn btn-success" data-bind="click:$parent.edit_conten_save">save</button><br><br>
+			        	<button class="btn btn-inverse" data-bind="click:$parent.edit_conten_cancel">cancel</button>
+			        </div>
+			      </div>
+			      <div class="after_dis_context">
+			        <div data-bind="visible:visible_context_text">
+			        	<div data-bind="text:context_text"></div>
+			        </div>
+			        <div data-bind="visible:visible_edit_context">
+			        	<textarea class="after_discuss_opinion" data-bind="textInput: context_edit"></textarea>
+			        </div>
+			      </div>
+			    </div>
+
+				</li>
+			</ul>
+		</div>
+
+
+
+
+		<div class="opinion_input_container">
+       <textarea class="after_discuss_opinion" placeholder="Anyone can add additional argument regardless of your role " data-bind="textInput: input_after_dis_prop"></textarea>
+    </div>
+    <div class="add_after_discuss_button_container">
+    	<button class="btn btn-primary" data-bind="click: add_after_dis_prop" >share</button>
+    </div>
+
+	</div>
+	<div id="Opp_AfterDiscuss_container">
+		<p class="after_discuss_title">Additional Opposition Argument </p>
+
+	</div>
+	<div id="General_AfterDiscuss_container">
+		<p class="after_discuss_title">General comment to this round</p>
+	</div>
+</div>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.3.0/knockout-min.js"></script>
+<script type="text/javascript" src="https://www.parsecdn.com/js/parse-1.4.2.min.js"></script>
+<script src="./AfterDiscuss.js"></script>
+
+<script>
+
+  var parse_app_id = "EWPPdrDVaAIqhRazWp8K0ZlmafAAPt93JiOAonvX";
+  var parse_js_key = "US6Lheio8PGcBdIpwGFhFSQVpi5GKunGf6hGq5Ze";
+  Parse.initialize(parse_app_id, parse_js_key);
+	var actual_game_obj = new Object();
+	var after_debate_obj = new AfterDebateTab();
+	var global_debate_game_id = "OXWxtY7dYY";
+	var global_own_parse_id = "I43dWXRBFN";
+
+  var Game = Parse.Object.extend("Game");
+  var game_query = new Parse.Query(Game);
+  game_query.get(global_debate_game_id, {
+    success: function(obj) {
+      actual_game_obj = obj;
+	    var after_debate_obj = new AfterDebateTab();
+	    ko.applyBindings(after_debate_obj);
+	    after_debate_obj.show_links();
+	    after_debate_obj.show_after_dis_prop();
+
+    },
+    error: function(error) {
+
+    }
+  });
+	
+
+</script>
+
+
+
+
+</body>

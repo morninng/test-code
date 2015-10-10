@@ -175,7 +175,7 @@ transcript_box.prototype.mouseover_trans_field = function(){
 
 	var self = this;
 	console.log("mouse over");
-	$(' .transcription_message, #transcript_body').css('font-size','large');
+	$(' .transcription_message').css('font-size','large');
 	$('.transcript_body').css('max-height','200px');
 }
 
@@ -184,7 +184,7 @@ transcript_box.prototype.mouseout_trans_field = function(){
 
 	var self = this;
 	console.log("mouse out");
-	$(' .transcription_message, #transcript_body').css('font-size','');
+	$(' .transcription_message').css('font-size','');
 	$('.transcript_body').css('max-height','100px');
 
 

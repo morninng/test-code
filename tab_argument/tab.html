@@ -1,0 +1,89 @@
+<html>
+<head>
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+ 
+
+
+<div role="tabpanel">
+  <ul class="nav nav-tabs" role="tablist">
+	  <li class="active"><a href="#First" aria-controls="First" data-toggle="tab"> First Round</a></li>
+	  <li><a href="#Second" aria-controls="Second" data-toggle="tab"> Second Round</a></li>
+	  <li><a href="#Third" aria-controls="Third" data-toggle="tab" > Third Round</a></li>
+	</ul>  
+	<div class="tab-content">  
+		<div role="tabpanel" class="tab-pane active" id="First">
+		  bbb
+		</div>
+		<div role="tabpanel" class="tab-pane" id="Second">
+		  aaa
+		</div>
+		<div role="tabpanel" class="tab-pane" id="Third">
+		   vvv
+		</div>  
+  </div>
+</div>
+
+
+<div id="aaa"></div>
+
+<script type="text/template" data-template="discuss_note_structure_template">
+<div id="discussion_note_container">
+	<div role="tabpanel">
+	  <ul class="nav nav-tabs" role="tablist">
+			<% _.each(data.team_list, function(e,i){ %>
+		  	<li class="<%= e.active_str %>"><a href="#<%= e.name %>" aria-controls="<%= e.name %>" data-toggle="tab"><%= e.name %></a></li>
+			<% });%>
+		</ul>
+		<div class="tab-content">
+			<% _.each(data.team_list, function(e,i){ %>
+			<div role="tabpanel" class="tab-pane <%= e.active_str %>" id="<%= e.name %>">
+			<%= e.content %>
+			</div>
+			<% });%>
+	  </div>
+	</div>
+</div>
+</script>
+
+<script>
+
+	var link_name_list = ["Gov", "Opp"];
+
+  var tab_obj_array = new Array();
+  for(var i=0; i< link_name_list.length; i++){
+
+    var active = "";
+    if(i==0){
+      active = "active";
+    }
+    var tab_obj = {name:link_name_list[i],active_str:active};
+    tab_obj_array.push(tab_obj);
+  }
+  var data = { team_list:tab_obj_array};
+
+/*
+	var data = { team_list:[{name:"Gov",active_str:"active", content:"kkk"},
+													{name:"Opp",active_str:"", content:"lll"}]}
+*/
+  template_name = "discuss_note_structure_template";
+  temp_name = "[data-template='" + template_name + "']";
+  var DiscussTab_Template = _.template($(temp_name).html());
+  var discussion_tab_element = $("#aaa");
+  var discussion_tab_html_text = DiscussTab_Template(data);
+  discussion_tab_element.html(discussion_tab_html_text);
+
+
+
+
+</script>
+
+
+</body>
+</html>

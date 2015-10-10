@@ -1,0 +1,532 @@
+<html>
+<head>
+
+	<link rel="stylesheet" href="./structure.css">
+	<link rel="stylesheet" href="./../chat/test_chat_style.css">
+	<link rel="stylesheet" href="./../../parse_mixidea/public/style/DirectionBar.css">
+	<link rel="stylesheet" href="./../../parse_mixidea/public/style/impression.css">
+	<link rel="stylesheet" href="./../../parse_mixidea/public/style/InfoBar.css">
+	<link rel="stylesheet" href="./../../parse_mixidea/public/style/participant_table.css">
+	<link rel="stylesheet" href="./../../parse_mixidea/public/style/user_status.css">
+	<link rel="stylesheet" href="./../../parse_mixidea/public/style/video_ui.css">
+	<link rel="stylesheet" href="./../../parse_mixidea/public/style/title.css">
+  <link rel="stylesheet" href="./../../parse_mixidea/public/style/game_status.css">
+  <link rel="stylesheet" href="./../../parse_mixidea/public/style/argument.css">
+  <link rel="stylesheet" href="./../../parse_mixidea/public/style/general_concept.css">
+
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.3.0/knockout-min.js"></script>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+
+</head>
+<body>
+
+<div id="whole">
+<div id="inner_whole">
+
+  <div id="container_top">
+	    <div id = "top_left"></div>
+      <div id = "top_right"></div>
+  </div>
+
+  <div id="container_second_top">
+  </div>
+
+  <div id="container_main">
+	    <div id="container_main_left">
+	    	<div id="container_main_left_above">
+	    			<div id="container_main_left_above_left">
+	    				<div id="container_main_left_above_left_up"></div>
+	    				<div id="container_main_left_above_left_below"></div>
+	    			</div>
+	    			<div id="container_main_left_above_right"></div>
+	    	</div>
+	    	<div id="container_main_left_below"></div>
+	    </div>
+	    <div id="container_main_right">
+	    </div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<div id="absolute_pain_1"></div>
+<div id="absolute_pain_2"></div>
+
+
+
+
+ <script type="text/template" data-template="title_template">
+    <div id="title_template_area">
+	  <form id="title_form">
+      <div id="title_container">
+    		<div id="event_left" >
+    		  <div id="event_title_show_out" >
+	            <div id= "motion_title">
+	              <strong>motion:</strong>
+	            </div>
+	            <div id="motion_sentence">
+	              <strong>thw legalize tobacco</strong>
+	            </div>
+          	  </div>
+    		</div>
+    		<div id="event_right">
+    			<button>update</button>
+    		</div>
+      </div>
+	  </form>
+	</div>
+ </script>
+
+
+
+
+
+<script type="text/template" data-template="impression_template">
+  <div id="impression_container">
+    <div class="hearhear">
+      <input type="image" id="hearhear_img" src="https://s3.amazonaws.com/mixidea/good.png" >
+    </div>
+    <div class="booboo">
+      <input type="image" id="booboo_img" src="https://s3.amazonaws.com/mixidea/bad.png" >
+    </div>
+  </div>
+</script>
+
+
+<script type="text/template" data-template="video_area_template">
+  <div id="video_area_container">
+  	<img src="./video_screen.png" width="280">
+  </div>
+</script>
+
+
+<script type="text/template" data-template="introduction_direction_template">
+  <div id="direction_container">
+  	<div>
+      <p>set preparation time</p>
+  		<select name="prep_duration" size="1">
+			<option value="5">5</option>
+			<option value="10">10</option>
+			<option value="20">20</option>
+			<option value="25">25</option>
+			<option value="30" selected>30</option>
+			<option value="40">40</option>
+			<option value="50">50</option>
+			<option value="60">60</option>
+		</select>
+		<button> update </button>
+  	</div>
+  	<div class="direction button">
+      <p>when everything is ready, debater should start preparation</p>
+  		<button id="start_prep_button" class="btn btn-success"> Start Preparation</button>
+  	</div>
+  </div>
+</script>
+
+
+<script type="text/template" data-template="preparation_direction_template">
+  <div id="direction_container">
+    <div id="preparation_time">
+      <p>preparation time spent</p>
+      <span >10:20</span>
+    </div>
+    <div class="direction button">
+      <p>Click here! after all attendance came back and preparation has expired</p>
+      <button id="start_debate_button" class="btn btn-success"> Start Debate!</button>
+    </div>
+
+  </div>
+</script>
+
+<script type="text/template" data-template="NA_Template">
+
+   <p id="debater_list_title">Debaters</p>
+   <div class="team_name_row">
+   	  <div>
+   	  	<div class="teame_name">Government</div>
+   	  </div>
+      <div>
+      	<div class="teame_name">Opposition</div>
+      </div>
+   </div>
+   <div class="participant_row">
+   	  <div class="participant" id='PM_Container'>
+   	  	<div class="participant_role">PM</div>
+   	  	<img src="booboo.jpg">
+   	  	<div class="participant_name">Yuta</div>
+   	  	<div class="participant_button"><button>cancel</button></div>
+   	  </div>
+   	  <div class="participant" id='LO_Container'>
+   	  	<div class="participant_role">MG</div>
+   	  	<img src="searchimage2.jpg">
+   	  	<div class="participant_name">AndrewSwedish</div>
+   	  	<div class="participant_button"><button>join</button></div>
+   	  </div>
+   </div>
+   <div class="participant_row">
+	  <div class="participant" id='MG_Container'>
+   	  	<div class="participant_role">MG</div>
+   	  	<img src="searchimage2.jpg">
+   	  	<div class="participant_name">Andrew</div>
+   	  	<div class="participant_button"><button>cancel</button></div>
+	  </div>
+	  <div class="participant" id='MO_Container'>
+   	  	<div class="participant_role">MO</div>
+   	  	<img src="searchimage2.jpg">
+   	  	<div class="participant_name">AndrewSwedishCanter</div>
+   	  	<div class="participant_button"><button>cancel</button></div>
+	  </div>
+   </div>
+   <div class="participant_row">
+     <div class="participant" id='PMR_Container'>
+   	  	<div class="participant_role">PMR</div>
+   	  	<img src="booboo.jpg">
+   	  	<div class="participant_name">Yuta</div>
+   	  	<div class="participant_button"><button>cancel</button></div>
+     </div>
+   	 <div class="participant" id='LOR_Container'>
+   	  	<div class="participant_role">LOR</div>
+   	  	<img src="searchimage2.jpg">
+   	  	<div class="participant_name">Andrew</div>
+   	  	<div class="participant_button"><button>cancel</button></div>
+   	 </div>
+   </div>
+   <br>
+   <p id="audience_list_title">Audiences</p>
+   <div id="audience_list">
+	 <ul>
+	   <li><img src="booboo.jpg"> Yuta</li>
+	   <li><img src="searchimage2.jpg"> Mayuko</li>
+	   <li><img src="booboo.jpg"> Yuta</li>
+	   <li><img src="searchimage2.jpg"> Mayuko</li>
+	   <li><img src="booboo.jpg"> Yuta</li>
+	   <li><img src="searchimage2.jpg"> Mayuko</li>
+	   <li><img src="booboo.jpg"> Yuta</li>
+	   <li><img src="searchimage2.jpg"> Mayuko</li>
+	 </ul>
+   </div>
+</script>
+
+
+<script type="text/template" data-template="intro_info_template">
+ <div id="info_intro">
+	 <p>What you should do before preparation</p>
+	 <ul>
+	 	<li>Introduce each other among participants</li>
+	 	<li>decide motion and update it on the above button</li>
+	 	<li>decide preparation time</li>
+	 	<li>update the role unless all debaters are not loged in</li>
+	 </ul>
+	 <p>after these points has been completed, you can start preparation</p>
+ </div>
+</script>
+
+<script type="text/template" data-template="prep_info_debater_template">
+ <div id="info_prep">
+   <div id="link_team_room">
+       <div>
+       link to <strong> team discussion room </strong> for Government
+       <img src="https://ssl.gstatic.com/s2/oz/images/stars/hangout/1/gplus-hangout-24x100-normal.png"
+      alt="Start a Hangout"
+      style="border:0;width:100px;height:24px;"/>
+      </div>
+   </div>
+   <p>What you should do before debate</p>
+   <ul>
+    <li>Debater should go to <strong> Team Discussion Room </strong> and construct argument</li>
+   </ul>
+   <p>How to go to <strong> Team Discussion Room</strong></p>
+   <ul>
+    <li>Click HangoutButton on the right</li>
+    <li>After new window has opened, click Join button</li>
+    <li>Following button appear and you should chose right button "Close existing window"</li>
+    <li>Wait your partner to come and construct your argument together</li>
+   </ul>
+ </div>
+</script>
+
+
+<script type="text/template" data-template="prep_info_audience_template">
+ <div id="info_prep">
+   <div id="link_team_room">
+       <div>
+       link to <strong> team discussion room </strong> for <strong>Government</strong>
+       <img src="https://ssl.gstatic.com/s2/oz/images/stars/hangout/1/gplus-hangout-24x100-normal.png"
+      alt="Start a Hangout"
+      style="border:0;width:100px;height:24px;"/>
+      </div>
+       <div>
+       link to <strong> team discussion room </strong> for <strong>Opposition</strong>
+       <img src="https://ssl.gstatic.com/s2/oz/images/stars/hangout/1/gplus-hangout-24x100-normal.png"
+      alt="Start a Hangout"
+      style="border:0;width:100px;height:24px;"/>
+      </div>
+   </div>
+   <p>What you should do before debate</p>
+   <ul>
+    <li>Audience can remain here and talk with other audiences</li>
+    <li>if you want to see how debater construct the argument you can go to debater <strong> Team Discussion Room </strong>, however audience should be silent and should not write anything there.</li>
+
+   </ul>
+   <p>How to go to <strong> Team Discussion Room</strong></p>
+   <ul>
+    <li>Click HangoutButton on the right</li>
+    <li>After new window has opened, click Join button</li>
+    <li>Following button appear and you should chose right button "Close existing window"</li>
+    <li>Wait your partner to come and construct your argument together</li>
+   </ul>
+ </div>
+</script>
+
+<script type="text/template" data-template="status_bar_template">
+ <div id="staus_bar">
+   <div id="status_intro" class="status_bar_element">introduction</div>
+   <div id="status_prep" class="status_bar_element">preparation</div>
+   <div id="status_debate" class="status_bar_element">debate</div>
+   <div id="status_reflec" class="status_bar_element">reflection</div>
+   <div id="status_complete" class="status_bar_element_last">complete</div>
+  </div>
+</script>
+
+
+
+<script type="text/template" data-template="chat_template">
+
+  <div id="chat_field">
+    <div class="msg_box">
+      <div class="msg_head">
+        <span data-bind="text:chat_header_title"></span>
+        <div class="window_icon" data-bind="visible:visible_collapse_button">
+          <div data-bind="event:{click:click_collapse}">
+            <img src="https://s3.amazonaws.com/mixidea/minimize.png">
+          </div>
+        </div>
+        <div class="window_icon" data-bind="visible:visible_maximize_button">
+          <div data-bind="event:{click:click_expand}">
+            <img src="https://s3.amazonaws.com/mixidea/maximize.png">
+          </div>
+        </div>
+      </div>
+      <div id="msg_wrap">
+        <div class="msg_body">
+          <ul data-bind="foreach: chat_message_array">
+            <li>
+                  <div data-bind="css:chat_box_class">
+                    <span class="chat_sender" data-bind="text:sender_name"></span>
+                    <span class="chat_message" data-bind="text:chat_message"></span>
+                  </div>
+                </li>
+          </ul>
+        </div>
+        <div class="msg_footer">
+          <textarea data-bind="textInput:chat_text_input, event:{keyup: onEnterTextbox}" class="msg_input" rows="2">
+          </textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+</script>
+
+
+<script type="text/template" data-template="DebaterNote_template">
+  <div id="general_concept_pain"></div>
+  <div id="argument_list"></div>
+</script>
+
+
+
+<script type="text/template" data-template="general_concept_template">
+    <div class='Concept'>
+      <p class="concept_title">General Concept</p>
+      <div class="concept_container">
+        <div class="concept_left">
+          <div class="concept_text_container">
+           <textarea class="general_concept_input" placeholder="input social background for your arguments, definition or teamstance should also be written here"></textarea>
+          </div>
+        </div>
+        <div class="concept_right">
+          <div class="Concept_editor_info">
+            <div >
+              <img  src="./searchimage2.jpg"><br>
+              Yuta Moriyama
+            </div>
+          </div>
+          <div class="Concept_button">
+            <div>
+              <button>save</button>
+            </div>
+          </div>
+          <div class="Concept_loading" >
+            <div class="spinner">
+              <div class="bounce1"></div>
+              <div class="bounce2"></div>
+              <div class="bounce3"></div>
+              <div class="bounce4"></div>
+              <div class="bounce5"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</script>
+
+
+
+
+
+
+<script type="text/template" data-template="argument_template">
+  <div class = "argument_element">
+    <h2>Argumet</h2>
+    <div id='Arg_<%= Argument_ID %>'>
+
+      <div class="title">
+        <div class="title_left">
+          <div>
+            <p>Title: <input class="ArgTitle_Input_default" placeholder="input title of the argument" type="text" ></input></p>
+          </div>
+          <div class="arg_title_loading" >
+            <div  class="spinner">
+              <div class="bounce1"></div>
+              <div class="bounce2"></div>
+              <div class="bounce3"></div>
+              <div class="bounce4"></div>
+              <div class="bounce5"></div>
+            </div>
+          </div>
+
+
+        </div>
+        <div class="arg_title_right">
+          <div class="arg_editor_info">
+            <div>
+              <img  src="./searchimage2.jpg"><br>
+              <span></span>
+            </div>
+          </div>
+          <div class="arg_title_button">
+            <div>
+              <button >save</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="main_arg">
+        <div class="MainArg_left">
+          <div>Content</div>
+          <div>
+           <textarea class="MainArgDefault_input"></textarea>
+          </div>
+          <div class="MainArg_loading" >
+            <div class="spinner">
+              <div class="bounce1"></div>
+              <div class="bounce2"></div>
+              <div class="bounce3"></div>
+              <div class="bounce4"></div>
+              <div class="bounce5"></div>
+            </div>
+          </div>
+        </div>
+        <div class="MainArg_right">
+          <div class="MainArg_editor_info">
+            <div>
+              <img  src="./searchimage2.jpg"><br>
+              <span> Yuta</span>
+            </div>
+          </div>
+          <div class="MainArg_button">
+            <div data-bind="visible:visible_button_MainArg_save">
+              <button data-bind="click:click_main_save">save</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div  class="arg_comment">
+        <p>Comment</p>
+        <ul class="arg_comment_ul">
+          <li class="arg_comment_list">
+            <div class="arg_comment_left">
+              <img  src="./searchimage2.jpg">
+            </div>
+            <div class="arg_comment_center">
+              <div>
+                <div class="arg_comment_txt"><strong><span >Yuta</span> : </strong><span>AAAAAAA</span></div>
+              </div>
+            </div>
+            <div class="arg_comment_right">
+              <div class="comment_button">
+                <div>
+                  <button>edit</button>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="comment_input">
+        <div>
+             comment: <textarea class="argument_comment_input"></textarea><br>
+             <div align="right">
+                <button>Add</button>
+             </div>
+        </div>
+      </div>
+      <hr>
+    </div>
+  </div>
+</script>
+
+
+
+
+
+<script type="text/template" data-template="goto_reflection_template">
+  <div id="goto_reflection">
+  After all speech over, go to reflection
+      <button id="start_reflec_button" class="btn btn-success"> Goto Reflection</button>
+  </div>
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="./../chat/test_chat_script.js"></script>
+<script src="test_construct_layout2.js"></script>
+<script src="test_game_status2.js"></script>
+
+<script>
+
+  var dom_constructor = new construct_layout();
+
+window.onload = function(){
+
+   dom_constructor.update_structure("introduction");
+ //  dom_constructor.update_structure("preparation");
+ //  dom_constructor.update_structure("debate");
+
+   var game_status_mgr = new Game_Status_Mgr();
+   game_status_mgr.initialize();
+
+}
+
+</script>
+
+</body>
+</html>
+
