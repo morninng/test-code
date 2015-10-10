@@ -56,7 +56,7 @@ function AfterDebateTab(){
 				arg_obj.increment("count");
 				arg_obj.save(null, {
 					success: function(obj) {
-						self.show_after_dis_prop();
+						self.show_all();
 					},
 				  error: function(gameScore, error) {
 						alert("fail to save");
@@ -67,9 +67,6 @@ function AfterDebateTab(){
 		    alert("fail to save");
 		  }
 		});
-
-
-
   }
 
 }
@@ -175,7 +172,7 @@ AfterDebateTab.prototype.onEnterLinkInput = function(){
 		actual_game_obj.save(null, {
 		  success: function(obj) {
 		  	self.input_url(null);
-		  	self.show_links();
+		  	self.show_all();
 		  },
 		  error: function(gameScore, error) {
 		  	alert("fail to save");
@@ -190,67 +187,60 @@ AfterDebateTab.prototype.onEnterLinkInput = function(){
 AfterDebateTab.prototype.add_after_dis_prop = function(){
 
 	var self = this;
-
 	console.log("add_after_dis_prop");
 	var text = self.input_after_dis_prop();
+	self.save_initial_content(text, "AfterDis_Prop")
+}
+
+
+
+AfterDebateTab.prototype.save_initial_content = function(text, content_type){
+
+	var self = this;
+
+	var text = self.input_after_dis_prop();
 	console.log(text);
-
-
 	var Argument = Parse.Object.extend("Argument");
 	var arg_obj = new Argument();
 	arg_obj.set("context",text);
 	arg_obj.set("user",global_own_parse_id);
 	arg_obj.set("count",0);
-	actual_game_obj.add("AfterDis_Prop",arg_obj);
+	actual_game_obj.add(content_type,arg_obj);
 	actual_game_obj.save(null, {
 	  success: function(obj) {
-	  	self.input_after_dis_prop(null);
-	  	self.show_after_dis_prop();
+
+	  	switch(content_type){
+	  		case "AfterDis_Prop":
+	  			self.input_after_dis_prop(null);
+	  		break;
+	  	}
+	  	self.show_all();
 	  },
 	  error: function(gameScore, error) {
 	  	alert("fail to save");
 	  }
 	});
+
+
 }
 
 
-AfterDebateTab.prototype.show_after_dis_prop = function(){
+AfterDebateTab.prototype.show_all = function(){
+
 	var self = this;
 
   var Game = Parse.Object.extend("Game");
   var game_query = new Parse.Query(Game);
   game_query.include("AfterDis_Prop");
+  game_query.include("related_url");
   game_query.get(global_debate_game_id, {
     success: function(game_obj) {
+
       var prop_array = game_obj.get("AfterDis_Prop");
-    	for(var i=0; i<prop_array.length; i++ ){
+			self.show_after_dis_prop(prop_array);
+    	var url_ogp_array = game_obj.get("related_url");
+			self.show_links(url_ogp_array);
 
-    		var context_obj = new Object();
-    		context_obj["id"] = prop_array[i].id;
-    		context_obj["user_img_src"] = "./searchimage2.jpg";
-    		context_obj["user_name"] = "Yuta";
-    		context_obj["visible_edit_button"] = true;
-    		context_obj["visible_edit_context"] = false;
-    		context_obj["visible_context_text"] = true;
-    		context_obj["context_edit"] = prop_array[i].get("context");
-    		context_obj["context_text"] = prop_array[i].get("context");
-    		context_obj["count"] = prop_array[i].get("count");
-    		context_obj["arg_type"] = "AfterDis_Prop";
-
-    		var exist = false;
-
-    		for(var j=0; j<self.after_dis_prop_array().length; j++){
-    			if(self.after_dis_prop_array()[j]["id"] == prop_array[i].id){
-       			exist =true;
-    				if(self.after_dis_prop_array()[j]["count"] != prop_array[i].get("count")){
-    					self.after_dis_prop_array.splice(j,1,context_obj);
-						}
-					}
-				}
-				if(!exist){
-    			self.after_dis_prop_array.push(context_obj);
-				}
-			}
     },
     error: function(gameScore, error) {
     	console.log("retrieveing links failed");
@@ -261,6 +251,37 @@ AfterDebateTab.prototype.show_after_dis_prop = function(){
 
 
 
+AfterDebateTab.prototype.show_after_dis_prop = function(prop_array){
+	var self = this;
+
+	for(var i=0; i<prop_array.length; i++ ){
+		var context_obj = new Object();
+		context_obj["id"] = prop_array[i].id;
+		context_obj["user_img_src"] = "./searchimage2.jpg";
+		context_obj["user_name"] = "Yuta";
+		context_obj["visible_edit_button"] = true;
+		context_obj["visible_edit_context"] = false;
+		context_obj["visible_context_text"] = true;
+		context_obj["context_edit"] = prop_array[i].get("context");
+		context_obj["context_text"] = prop_array[i].get("context");
+		context_obj["count"] = prop_array[i].get("count");
+		context_obj["arg_type"] = "AfterDis_Prop";
+
+		var exist = false;
+
+		for(var j=0; j<self.after_dis_prop_array().length; j++){
+			if(self.after_dis_prop_array()[j]["id"] == prop_array[i].id){
+   			exist =true;
+				if(self.after_dis_prop_array()[j]["count"] != prop_array[i].get("count")){
+					self.after_dis_prop_array.splice(j,1,context_obj);
+				}
+			}
+		}
+		if(!exist){
+			self.after_dis_prop_array.push(context_obj);
+		}
+	}
+}
 
 
 AfterDebateTab.prototype.show_links = function(){
