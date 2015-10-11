@@ -1,4 +1,4 @@
-/*
+
 
 function AfterDebateTabWrapper(){
 	var self = this;
@@ -12,19 +12,85 @@ AfterDebateTabWrapper.prototype.update_from_server = function(){
 
 }
 
-AfterDebateTabWrapper.prototype.add = function(){
+AfterDebateTabWrapper.prototype.create = function(root_element_name){
 	var self = this;
 
-	self.summary_tab_obj = new SummaryTab();
+  self.root_element = $(root_element_name);
+
+
+	var dom = $("<div>");
+	dom.attr("id","after_discuss_container");
+
+
+  var RelatedLink_html_Template = _.template($('[data-template="after_discuss_related_link_template"]').html());
+  var RelatedLink_html_text = RelatedLink_html_Template();
+  dom.append(RelatedLink_html_text);
+
+
+	var prop_data = { data: {
+		 title:"Additional Proposition Argument",
+		 content_array:"after_dis_prop_array",
+		 textarea:"input_after_dis_prop",
+		 button:"add_after_dis_prop",
+		 visible_loading:"visible_prop_loading"
+		}};
+
+  var Prop_html_Template = _.template($('[data-template="after_discuss_arg_template"]').html());
+  var Prop_html_text = Prop_html_Template(prop_data);
+  dom.append(Prop_html_text);
+
+
+	var opp_data = { data: {
+		 title:"Additional Opposition Argument",
+		 content_array:"after_dis_opp_array",
+		 textarea:"input_after_dis_opp",
+		 button:"add_after_dis_opp",
+		 visible_loading:"visible_opp_loading"
+		}};
+
+
+  var Opp_html_Template = _.template($('[data-template="after_discuss_arg_template"]').html());
+  var Opp_html_text = Opp_html_Template(opp_data);
+  dom.append(Opp_html_text);
+
+	var general_data = { data: {
+		 title:"General comment to this round",
+		 content_array:"after_dis_general_array",
+		 textarea:"input_after_dis_general",
+		 button:"add_after_dis_general",
+		 visible_loading:"visible_general_loading"
+		}};
+
+
+  var General_html_Template = _.template($('[data-template="after_discuss_arg_template"]').html());
+  var General_html_text = General_html_Template(general_data);
+  dom.append(General_html_text);
+
+
+	self.root_element.html(dom);
+
+	self.after_debate_obj = new AfterDebateTab();
+  self.after_discuss_el = document.getElementById('after_discuss_container');
+  ko.applyBindings(self.after_debate_obj, self.after_discuss_el);
+  self.after_debate_obj.show_all();
 
 }
 
 AfterDebateTabWrapper.prototype.remove = function(){
 	var self = this;
 
+	if(!self.after_debate_obj){
+		return;
+	}
 
+  ko.cleanNode(self.after_discuss_el);
+  self.after_discuss_el = null;
+  self.root_element.html(null);
+  self.root_element = null;
+
+  self.after_debate_obj = null;
 }
-*/
+
 
 
 
@@ -33,7 +99,15 @@ function AfterDebateTab(){
 	self.link_array = ko.observableArray();
   self.input_url = ko.observable();
   self.input_after_dis_prop = ko.observable();
+  self.input_after_dis_opp = ko.observable();
+  self.input_after_dis_general = ko.observable();
   self.after_dis_prop_array = ko.observableArray();
+  self.after_dis_opp_array = ko.observableArray();
+  self.after_dis_general_array = ko.observableArray();
+  self.visible_link_loading = ko.observable(false);
+  self.visible_prop_loading = ko.observable(false);
+  self.visible_opp_loading = ko.observable(false);
+  self.visible_general_loading = ko.observable(false);
 
   self.edit_content = function(data){
   	self.changeElementState(data, "edit");
@@ -86,8 +160,10 @@ AfterDebateTab.prototype.changeElementState = function(data, in_update_type){
   			wrapper_func_array = self.after_dis_prop_array;
   		break;
   		case "AfterDis_Opp":
+  			wrapper_func_array = self.after_dis_opp_array;
   		break;
-  		case "GeneralComment":
+  		case "AfterDis_General":
+  			wrapper_func_array = self.after_dis_general_array;
   		break;
   	}
   	var index= NaN;
@@ -136,7 +212,7 @@ AfterDebateTab.prototype.onEnterLinkInput = function(){
   if(!valid_url){
   	return;
   }
-
+  self.visible_link_loading(true);
 	var data_sent = EncodeHTMLForm(input_url);
 	console.log(data_sent);
 	$.ajax({
@@ -176,6 +252,7 @@ AfterDebateTab.prototype.onEnterLinkInput = function(){
 		  },
 		  error: function(gameScore, error) {
 		  	alert("fail to save");
+		  	self.visible_link_loading(false);
 		  }
 		});
 	});
@@ -188,17 +265,33 @@ AfterDebateTab.prototype.add_after_dis_prop = function(){
 
 	var self = this;
 	console.log("add_after_dis_prop");
+	self.visible_prop_loading(true);
 	var text = self.input_after_dis_prop();
 	self.save_initial_content(text, "AfterDis_Prop")
 }
 
+AfterDebateTab.prototype.add_after_dis_opp = function(){
+
+	var self = this;
+	console.log("add_after_dis_opp");
+	self.visible_opp_loading(true);
+	var text = self.input_after_dis_opp();
+	self.save_initial_content(text, "AfterDis_Opp")
+}
+AfterDebateTab.prototype.add_after_dis_general = function(){
+
+	var self = this;
+	console.log("add_after_dis_general");
+	self.visible_general_loading(true);
+	var text = self.input_after_dis_general();
+	self.save_initial_content(text, "AfterDis_General")
+}
 
 
 AfterDebateTab.prototype.save_initial_content = function(text, content_type){
 
 	var self = this;
 
-	var text = self.input_after_dis_prop();
 	console.log(text);
 	var Argument = Parse.Object.extend("Argument");
 	var arg_obj = new Argument();
@@ -212,12 +305,22 @@ AfterDebateTab.prototype.save_initial_content = function(text, content_type){
 	  	switch(content_type){
 	  		case "AfterDis_Prop":
 	  			self.input_after_dis_prop(null);
+	  			break;
+	  		case "AfterDis_Opp":
+	  			self.input_after_dis_opp(null);
+	  			break;
+	  		case "AfterDis_General":
+	  			self.input_after_dis_general(null);
+	  			break;
 	  		break;
 	  	}
 	  	self.show_all();
 	  },
 	  error: function(gameScore, error) {
 	  	alert("fail to save");
+		  self.visible_prop_loading (false);
+		  self.visible_opp_loading(false);
+		  self.visible_general_loading(false);
 	  }
 	});
 
@@ -232,18 +335,42 @@ AfterDebateTab.prototype.show_all = function(){
   var Game = Parse.Object.extend("Game");
   var game_query = new Parse.Query(Game);
   game_query.include("AfterDis_Prop");
+  game_query.include("AfterDis_Opp");
+  game_query.include("AfterDis_General");
   game_query.include("related_url");
   game_query.get(global_debate_game_id, {
     success: function(game_obj) {
 
       var prop_array = game_obj.get("AfterDis_Prop");
-			self.show_after_dis_prop(prop_array);
+      if(prop_array){
+				self.show_after_dis_opinion(prop_array, "AfterDis_Prop");
+			}
+      var opp_array = game_obj.get("AfterDis_Opp");
+      if(opp_array){
+				self.show_after_dis_opinion(opp_array, "AfterDis_Opp");
+			}
+      var general_array = game_obj.get("AfterDis_General");
+      if(general_array){
+				self.show_after_dis_opinion(general_array, "AfterDis_General");
+			}
+
     	var url_ogp_array = game_obj.get("related_url");
-			self.show_links(url_ogp_array);
+    	if(url_ogp_array){
+				self.show_links(url_ogp_array);
+			}
+
+		  self.visible_link_loading(false);
+		  self.visible_prop_loading (false);
+		  self.visible_opp_loading(false);
+		  self.visible_general_loading(false);
 
     },
     error: function(gameScore, error) {
     	console.log("retrieveing links failed");
+		  self.visible_link_loading(false);
+		  self.visible_prop_loading (false);
+		  self.visible_opp_loading(false);
+		  self.visible_general_loading(false);
   	}
 	});
 }
@@ -251,34 +378,50 @@ AfterDebateTab.prototype.show_all = function(){
 
 
 
-AfterDebateTab.prototype.show_after_dis_prop = function(prop_array){
+AfterDebateTab.prototype.show_after_dis_opinion = function(opinion_array, type){
 	var self = this;
 
-	for(var i=0; i<prop_array.length; i++ ){
-		var context_obj = new Object();
-		context_obj["id"] = prop_array[i].id;
-		context_obj["user_img_src"] = "./searchimage2.jpg";
-		context_obj["user_name"] = "Yuta";
-		context_obj["visible_edit_button"] = true;
-		context_obj["visible_edit_context"] = false;
-		context_obj["visible_context_text"] = true;
-		context_obj["context_edit"] = prop_array[i].get("context");
-		context_obj["context_text"] = prop_array[i].get("context");
-		context_obj["count"] = prop_array[i].get("count");
-		context_obj["arg_type"] = "AfterDis_Prop";
+  	var wrapper_func_array;
+  	switch(type){
+  		case "AfterDis_Prop":
+  			wrapper_func_array = self.after_dis_prop_array;
+  		break;
+  		case "AfterDis_Opp":
+  			wrapper_func_array = self.after_dis_opp_array;
+  		break;
+  		case "AfterDis_General":
+  			wrapper_func_array = self.after_dis_general_array;
+  		break;
+  	}
 
-		var exist = false;
+	for(var i=0; i<opinion_array.length; i++ ){
 
-		for(var j=0; j<self.after_dis_prop_array().length; j++){
-			if(self.after_dis_prop_array()[j]["id"] == prop_array[i].id){
-   			exist =true;
-				if(self.after_dis_prop_array()[j]["count"] != prop_array[i].get("count")){
-					self.after_dis_prop_array.splice(j,1,context_obj);
+		if(opinion_array[i]){
+
+			var context_obj = new Object();
+			context_obj["id"] = opinion_array[i].id;
+			context_obj["user_img_src"] = "./searchimage2.jpg";
+			context_obj["user_name"] = "Yuta";
+			context_obj["visible_edit_button"] = true;
+			context_obj["visible_edit_context"] = false;
+			context_obj["visible_context_text"] = true;
+			context_obj["context_edit"] = opinion_array[i].get("context");
+			context_obj["context_text"] = opinion_array[i].get("context");
+			context_obj["count"] = opinion_array[i].get("count");
+			context_obj["arg_type"] = type;
+			var exist = false;
+
+			for(var j=0; j<wrapper_func_array().length; j++){
+				if(wrapper_func_array()[j]["id"] == opinion_array[i].id){
+	   			exist =true;
+					if(wrapper_func_array()[j]["count"] != opinion_array[i].get("count")){
+						wrapper_func_array.splice(j,1,context_obj);
+					}
 				}
 			}
-		}
-		if(!exist){
-			self.after_dis_prop_array.push(context_obj);
+			if(!exist){
+				wrapper_func_array.push(context_obj);
+			}
 		}
 	}
 }
@@ -317,47 +460,6 @@ AfterDebateTab.prototype.show_links = function(){
     	console.log("retrieveing links failed");
   	}
 	});
-}
-
-
-
-AfterDebateTab.prototype.show_prop_argument = function(){
-
-}
-
-AfterDebateTab.prototype.add_prop_argument = function(){
-
-}
-
-AfterDebateTab.prototype.edit_prop_argument = function(){
-
-}
-
-AfterDebateTab.prototype.show_opp_argument = function(){
-	// show it as a knockout array with counter
-	// value is updated only when the counter is not the same
-
-	// the logic is mostly the same as argument comment
-
-}
-AfterDebateTab.prototype.add_opp_argument = function(){
-	// counter is 0
-}
-
-AfterDebateTab.prototype.edit_opp_argument = function(){
-		//retrieve counter value and increase the counter and update
-}
-
-AfterDebateTab.prototype.show_evaluation_comment = function(){
-
-}
-
-AfterDebateTab.prototype.add_evaluation_comment = function(){
-
-}
-
-AfterDebateTab.prototype.edit_evaluation_comment = function(){
-
 }
 
 

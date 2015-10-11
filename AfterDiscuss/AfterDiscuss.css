@@ -36,6 +36,10 @@
 	list-style:none;
 }
 
+#link_input{
+	display:flex;
+}
+
 .link_input_style{
 	width :600px;
 	font-size: large;
@@ -83,6 +87,8 @@
 	
 }
 
-#Prop_AfterDiscuss_container ul{
+.AfterDiscuss_container ul{
 	list-style:none;
 }
+
+
