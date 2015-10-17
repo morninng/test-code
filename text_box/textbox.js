@@ -119,27 +119,29 @@ Argument_VM.prototype.check_edit_status = function(){
 
 Argument_VM.prototype.click_save_arg = function(){
 	var self = this;
+	/*
 	self.visible_save_button(false);
 	self.show_save_message();
-
+	*/
 }
-Argument_VM.prototype.onEnterTitle = function(data, event){
 
+Argument_VM.prototype.onEnterTitle = function(data, event){
 	var self = this;
-	console.log(event.keyCode);
-	self.visible_save_button(true);
-  if(event.keyCode === 13 ){
-  	self.save_input_data();
-  }
+	self.input_data_manage(data, event,"title");
 }
 
 
 Argument_VM.prototype.onEnterTextbox2 = function(data, event){
+	var self = this;
+	self.input_data_manage(data, event,"main");
+
+}
+
+Argument_VM.prototype.input_data_manage = function(data, event, type){
 
 	var self = this;
 	console.log(event.keyCode);
 	self.visible_save_button(true);
-
 
 	self.textarea_wrapper_css("textarea_wrapper_updating");
 	if(event.keyCode === 32 && self.prev_keycode != 32){ /*space*/
@@ -152,13 +154,22 @@ Argument_VM.prototype.onEnterTextbox2 = function(data, event){
   	 || (event.keyCode === 188 && self.prev_keycode != 188) /*comma*/
   	 || (self.count > 3)
   	 ){
-  	var inputed_value = self.input_text2();
-  	var number_row = self.update_height( inputed_value);
-  	self.count = 0;
+  	
+  	switch(type){
+  		case "main":
+  			var inputed_value = self.input_text2();
+  			var number_row = self.update_height( inputed_value);
+  		break;
+  		case "title":
+  		break;
+  	}
   	self.save_input_data();
+  	self.count = 0;
   }
   self.prev_keycode = event.keyCode;
+
 }
+
 
 
 Argument_VM.prototype.show_save_message = function(){
@@ -194,10 +205,4 @@ function add_linebreak_html(context){
 
 	return converted_context;
 }
-
-
-
-
-
-
 
