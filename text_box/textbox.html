@@ -2,8 +2,10 @@
 <head>
 
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.3.0/knockout-min.js"></script>
+  <script type="text/javascript" src="https://www.parsecdn.com/js/parse-1.4.2.min.js"></script>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
 
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="./textbox.css">
@@ -14,27 +16,29 @@
 <body>
 
 
-	<div class="argument_container" data-bind="visible:visible_textarea">
+<div id="root"></div>
 
+
+<script type="text/template" data-template="argument_template">
+
+ <div id='Arg_<%= Argument_ID %>'>
+ 	<div class="argument_container" data-bind="visible:visible_textarea">
 		<div data-bind="css:textarea_wrapper_css, attr:{style:style_value}">
 			argument title
 			<input class="argument_title_css" type="text" placeholder="input title of the argument">
 			argument context
-			<textarea id="content_textarea" class="text_area_css" placeholder="input your opinion here" data-bind="textInput:input_text2, event:{keyup: onEnterTextbox2}, hasFocus:TextFocused2"></textarea>
-			<div id="hidden_text" data-bind="html:hidden_html"></div>
-
-
+			<textarea class="content_textarea text_area_css" placeholder="input your opinion here" data-bind="textInput:input_text2, event:{keyup: onEnterTextbox2}, hasFocus:TextFocused2"></textarea>
+			<div class="hidden_text" data-bind="html:hidden_html"></div>
 			<div class="arg_edit_footer">
 				<div data-bind="visible:visible_save_button" class="button_container">
 					<button class="btn btn-primary save_button" data-bind="click:click_save_arg">save</button>
 				</div>
 				<div class="save_indicate" data-bind="visible:visible_save_indicate">
-					<div id="save_message">saved & updated</div>
+					<div class="save_message">saved & updated</div>
 				</div>
 			</div>
 		</div>
-
-    <div class="loading_container">
+    <div class="loading_container" data-bind="visible:visible_loading">
 			<img src="./searchimage2.jpg">
 			<div class="spinner loading_vertical">
 		    <div class="bounce1"></div>
@@ -44,15 +48,79 @@
 		    <div class="bounce5"></div>
 		  </div>
 		</div>
-
 	</div>
-
-
+ </div>
+</script>
 
 <script src="./textbox.js"></script>
 <script>
-	var textbox_obj = new textbox_mgr();
-	ko.applyBindings(textbox_obj);
+
+  var parse_app_id = "EWPPdrDVaAIqhRazWp8K0ZlmafAAPt93JiOAonvX";
+  var parse_js_key = "US6Lheio8PGcBdIpwGFhFSQVpi5GKunGf6hGq5Ze";
+  Parse.initialize(parse_app_id, parse_js_key);
+	var global_debate_game_id = "7ddk7yOjN2";
+
+function Argument_Mgr(){
+	var self = this;
+	self.element = "#root";
+	self.team_name = "Gov";
+  self.argument_param_name = self.team_name + "_argument";
+
+
+	self.existing_Argument_list = new Array();
+	self.argument_game_obj = new Object();
+
+	self.start();
+
+}
+
+Argument_Mgr.prototype.start = function(){
+
+	var self = this;
+  var Game = Parse.Object.extend("Game");
+  var game_query = new Parse.Query(Game);
+  game_query.include(self.argument_param_name);
+
+	game_query.get(global_debate_game_id, {
+		success: function(obj) {
+			self.argument_game_obj = obj;
+			var argument_obj_array = self.argument_game_obj.get(self.argument_param_name);
+			if(argument_obj_array){
+				for(var i=0; i< argument_obj_array.length; i++){
+					self.ApplyTemplate(argument_obj_array[i], argument_obj_array[i].id);
+				}
+			}
+		},
+		error: function(error) {
+						console.log(error);
+		}
+	});
+}
+
+
+Argument_Mgr.prototype.ApplyTemplate = function(obj, argument_id){
+
+	var self = this; 
+	self.existing_Argument_list.push(argument_id);
+	console.log("apply template");
+	var template_name = "[data-template='argument_template']";
+	var Argument_html_Template = _.template($(template_name).html());
+  var argument_element = $(self.element);
+  var data = {Argument_ID:argument_id};
+  var argument_html_text = Argument_html_Template(data);
+  argument_element.append(argument_html_text);
+
+  eval("self.argument_vm_" + argument_id + "= new Argument_VM();");
+  var element_name = 'Arg_' + argument_id;
+  var argument_el = document.getElementById(element_name);
+    
+  ko.applyBindings(eval("self.argument_vm_" + argument_id) , argument_el);
+	eval("self.argument_vm_" + argument_id + ".initialize(obj)");
+}
+
+ var aaa = new Argument_Mgr();
+
+
 
 </script>
 

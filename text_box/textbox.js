@@ -1,7 +1,6 @@
-function textbox_mgr(){
+function Argument_VM(){
 	self = this;
 
-	self.TextboxFocused = ko.observable();
 	self.title_input = ko.observable();
 
 	self.style_value = ko.observable();
@@ -14,6 +13,7 @@ function textbox_mgr(){
 	self.onEnterTextbox = ko.observable();
 	self.visible_save_button = ko.observable(false);
 	self.visible_save_indicate = ko.observable(false);
+	self.visible_loading = ko.observable(false);
 
 	self.textarea_wrapper_css = ko.observable("textarea_wrapper_default");
 
@@ -23,22 +23,40 @@ function textbox_mgr(){
 	self.text_content = ko.observable();
 
   self.TextFocused2.subscribe( function(focused) {
+	   		console.log(" id is" + self.arg_id);
 	   if (focused) {
-	   		console.log(" textbox1 focused");
-	   		self.textarea_wrapper_css("textarea_wrapper_focused");
+	   		console.log(" textbox focused");
+	   		this.textarea_wrapper_css("textarea_wrapper_focused");
+	   		this.visible_loading(true);
 			}
 	   if (!focused) {
-	   		console.log("textbox1 not focused");
+	   		console.log("textbox not focused");
+	   		this.save_input_data();
 			}
 
-	});
+	}, self);
+}
+
+Argument_VM.prototype.initialize = function(argument_obj){
+
+	var self = this;
+	self.arg_id = argument_obj.id;
+	self.arg_obj = argument_obj;
+	self.root_element_id = "#Arg_" + self.arg_id;
+	console.log("initialized" + self.arg_id);
+
+}
+
+
+Argument_VM.prototype.save_input_data = function(){
+	
+
+
 }
 
 
 
-
-
-textbox_mgr.prototype.click_save_arg = function(){
+Argument_VM.prototype.click_save_arg = function(){
 	var self = this;
 	self.textarea_wrapper_css("textarea_wrapper_saved");
 	self.visible_save_button(false);
@@ -47,7 +65,7 @@ textbox_mgr.prototype.click_save_arg = function(){
 }
 
 
-textbox_mgr.prototype.onEnterTextbox2 = function(data, event){
+Argument_VM.prototype.onEnterTextbox2 = function(data, event){
 
 	var self = this;
 	console.log(event.keyCode);
@@ -60,7 +78,7 @@ textbox_mgr.prototype.onEnterTextbox2 = function(data, event){
 		self.textarea_wrapper_css("textarea_wrapper_saved");
 
   	var inputed_value = self.input_text2();
-  	var number_row = self.update_height( inputed_value, "#content_textarea");
+  	var number_row = self.update_height( inputed_value);
 		self.count = 0
   }
 
@@ -68,25 +86,25 @@ textbox_mgr.prototype.onEnterTextbox2 = function(data, event){
 }
 
 
-textbox_mgr.prototype.show_save_message = function(){
+Argument_VM.prototype.show_save_message = function(){
 	var self = this;
 	self.visible_save_indicate(true);
-	$("#save_message").css('opacity','1');
-	$("#save_message").animate({opacity:0},1000);
+	$(".save_message", self.root_element_id ).css('opacity','1');
+	$(".save_message", self.root_element_id ).animate({opacity:0},1000);
 
 }
 
 
-textbox_mgr.prototype.update_height = function(text, element_name){
+Argument_VM.prototype.update_height = function(text){
 
 	var self = this;	
 
 	converted_text = add_linebreak_html(text);
 	self.hidden_html(converted_text);
-	var hidden_height = $("#hidden_text").height();
-	var current_height = $("#content_textarea").height();
+	var hidden_height = $(".hidden_text", self.root_element_id).height();
+	var current_height = $(".content_textarea", self.root_element_id).height();
 	if(current_height< (hidden_height+ 20)){
-		$("#content_textarea").height(hidden_height + 20);	
+		$(".content_textarea", self.root_element_id).height(hidden_height + 20);	
 	}
 
 }
