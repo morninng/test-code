@@ -25,7 +25,7 @@
  	<div class="argument_container" data-bind="visible:visible_textarea">
 		<div data-bind="css:textarea_wrapper_css, attr:{style:style_value}">
 			argument title
-			<input class="argument_title_css" type="text" placeholder="input title of the argument">
+			<input class="argument_title_css" type="text" placeholder="input title of the argument" data-bind="textInput:input_title, event:{keyup: onEnterTitle}, hasFocus:TitleFocused">
 			argument context
 			<textarea class="content_textarea text_area_css" placeholder="input your opinion here" data-bind="textInput:input_text2, event:{keyup: onEnterTextbox2}, hasFocus:TextFocused2"></textarea>
 			<div class="hidden_text" data-bind="html:hidden_html"></div>
@@ -34,7 +34,7 @@
 					<button class="btn btn-primary save_button" data-bind="click:click_save_arg">save</button>
 				</div>
 				<div class="save_indicate" data-bind="visible:visible_save_indicate">
-					<div class="save_message">saved & updated</div>
+					<div class="save_message">saved & shared with partner</div>
 				</div>
 			</div>
 		</div>
