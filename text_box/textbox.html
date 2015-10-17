@@ -1,0 +1,61 @@
+<html>
+<head>
+
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.3.0/knockout-min.js"></script>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="./textbox.css">
+	<link rel="stylesheet" type="text/css" href="./loading_spinner.css">
+	<link rel="stylesheet" type="text/css" href="./loading.css">
+
+</head>
+<body>
+
+
+	<div class="argument_container" data-bind="visible:visible_textarea">
+
+		<div data-bind="css:textarea_wrapper_css, attr:{style:style_value}">
+			argument title
+			<input class="argument_title_css" type="text" placeholder="input title of the argument">
+			argument context
+			<textarea id="content_textarea" class="text_area_css" placeholder="input your opinion here" data-bind="textInput:input_text2, event:{keyup: onEnterTextbox2}, hasFocus:TextFocused2"></textarea>
+			<div id="hidden_text" data-bind="html:hidden_html"></div>
+
+
+			<div class="arg_edit_footer">
+				<div data-bind="visible:visible_save_button" class="button_container">
+					<button class="btn btn-primary save_button" data-bind="click:click_save_arg">save</button>
+				</div>
+				<div class="save_indicate" data-bind="visible:visible_save_indicate">
+					<div id="save_message">saved & updated</div>
+				</div>
+			</div>
+		</div>
+
+    <div class="loading_container">
+			<img src="./searchimage2.jpg">
+			<div class="spinner loading_vertical">
+		    <div class="bounce1"></div>
+		    <div class="bounce2"></div>
+		    <div class="bounce3"></div>
+		    <div class="bounce4"></div>
+		    <div class="bounce5"></div>
+		  </div>
+		</div>
+
+	</div>
+
+
+
+<script src="./textbox.js"></script>
+<script>
+	var textbox_obj = new textbox_mgr();
+	ko.applyBindings(textbox_obj);
+
+</script>
+
+
+</body>
+</html>
