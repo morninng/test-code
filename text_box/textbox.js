@@ -100,29 +100,29 @@ Argument_VM.prototype.save_input_data = function(){
 
 	  }
 	});
-
 }
+
+Argument_VM.prototype.show_save_message = function(){
+	var self = this;
+	self.visible_save_indicate(true);
+	$(".save_message", self.root_element_id ).css('opacity','1');
+	$(".save_message", self.root_element_id ).animate({opacity:0},1500);
+}
+
 Argument_VM.prototype.check_edit_status = function(){
 	var self = this;
-
 	var content_focusd = self.TextFocused2();
 	var title_focused = self.TitleFocused();
 
 	if(!content_focusd && !title_focused){
 		self.textarea_wrapper_css("textarea_wrapper_default");
 	  self.visible_loading(false);
-	self.visible_save_button(false);
+		self.visible_save_button(false);
 	}
-
 }
-
 
 Argument_VM.prototype.click_save_arg = function(){
 	var self = this;
-	/*
-	self.visible_save_button(false);
-	self.show_save_message();
-	*/
 }
 
 Argument_VM.prototype.onEnterTitle = function(data, event){
@@ -130,11 +130,9 @@ Argument_VM.prototype.onEnterTitle = function(data, event){
 	self.input_data_manage(data, event,"title");
 }
 
-
 Argument_VM.prototype.onEnterTextbox2 = function(data, event){
 	var self = this;
 	self.input_data_manage(data, event,"main");
-
 }
 
 Argument_VM.prototype.input_data_manage = function(data, event, type){
@@ -170,17 +168,6 @@ Argument_VM.prototype.input_data_manage = function(data, event, type){
 
 }
 
-
-
-Argument_VM.prototype.show_save_message = function(){
-	var self = this;
-	self.visible_save_indicate(true);
-	$(".save_message", self.root_element_id ).css('opacity','1');
-	$(".save_message", self.root_element_id ).animate({opacity:0},1500);
-
-}
-
-
 Argument_VM.prototype.update_height = function(text){
 
 	var self = this;	
@@ -192,9 +179,7 @@ Argument_VM.prototype.update_height = function(text){
 	if(current_height< (hidden_height+ 20)){
 		$(".content_textarea", self.root_element_id).height(hidden_height + 20);	
 	}
-
 }
-
 
 	
 function add_linebreak_html(context){
