@@ -48,7 +48,6 @@
 .text_area_css{
 	width:100%;
 	z-index: 2;
-	margin-bottom:7px;
 }
 .hidden_text {
 	width:100%;
@@ -58,15 +57,21 @@
 	top: 0px;
   left: 0px;
 }
+.arg_edit_footer{
+	display:flex;
+	flex-direction:row-reverse;
+}
 
+.arg_edit_footer div:last-child{
+	margin-right: auto;
+}
 
 .button_container{
 	text-align:right;
-	padding-top:2px;
-	padding-right:5px;
+	padding-top:7px;
+	padding-right:10px;
 	padding-bottom:4px;
 
-	background-color:#DCDCDC;
 }
 
 
@@ -89,6 +94,7 @@
 }
 .save_message{
 	color:green;
+	margin-right:30px;
 }
 
 
