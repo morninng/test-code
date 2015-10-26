@@ -4,7 +4,6 @@
     <meta charset="utf-8">
 
     <link href="./test_chat_style.css" rel="stylesheet">
-    <link href="./../../parse_mixidea/public/style/debater_bar.css" rel="stylesheet">
     <link href="./test_transcription_style.css" rel="stylesheet">
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.3.0/knockout-min.js"></script>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
@@ -62,27 +61,6 @@
 		</div>
 	</div>
 	<div id="absolute_pain"></div>
-	<div id="absolute_pain3">
-		<div id="debater_box">
-			<div class="side_role_box" id="side_PM">
-				<div class="side_role_name">PM</div>
-				<div class="side_debater_name">Yuta</div>
-			</div>
-			<div class="side_role_box" id="side_LO">
-				<div class="side_role_name">LO</div>
-				<div class="side_debater_name">Shigeru</div>
-			</div>
-			<div class="side_role_box" id="side_DPM">
-				<div class="side_role_name">DPM</div>
-				<div class="side_debater_name">Kosaka</div>
-			</div>
-			<div class="side_role_box" id="side_DLO">
-				<div class="side_role_name">DLO</div>
-				<div class="side_debater_name">Yuta</div>
-			</div>
-
-		</div>
-	</div>
 	  
 
 
@@ -159,11 +137,6 @@
 		}
 
 	</script>
-
-	<script>
-		$('#side_LO').css('background-color', '#FF69B4');
-	</script>
-
 
   </body>
 </html>

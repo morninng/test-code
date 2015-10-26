@@ -2,18 +2,11 @@ function Argument_VM(){
 	self = this;
 
 	self.title_input = ko.observable();
-	self.input_text = ko.observable();
-
 	self.title_content = ko.observable();
 
 	self.hidden_html = ko.observable();
-	self.visible_textarea = ko.observable(true);
-	self.TextFocused = ko.observable();
 	self.isMainTextboxFocused = ko.observable();
 	self.isTitleFocused = ko.observable();
-	self.textarea1_css = ko.observable();
-	self.onEnterTextbox = ko.observable();
-
 
 	self.visible_button_MainArg_save = ko.observable(false);
 	self.visible_button_MainArg_edit = ko.observable(false);
@@ -26,16 +19,12 @@ function Argument_VM(){
 	self.visible_MainArg_textbox_written = ko.observable(false);
 	self.main_content = ko.observable();
 
-	self.textarea_wrapper_css = ko.observable("textarea_wrapper_default");
+	self.arg_content_wrapper_css = ko.observable("textarea_wrapper_default");
 
 	self.main_input = ko.observable();
 
 	self.editor_MainArg_pict_src = ko.observable();
 	self.editor_MainArg_name = ko.observable();
-
-	self.visible_content = ko.observable(true);
-	self.text_content = ko.observable();
-
 
 }
 
@@ -54,7 +43,7 @@ Argument_VM.prototype.initialize = function(argument_obj){
 	   		this.become_editing_status()
 			}
 	   if (!focused) {
-	   		this.save_input_data();
+	   		this.save_input_context();
 			}
 	}, self);
 
@@ -65,7 +54,7 @@ Argument_VM.prototype.initialize = function(argument_obj){
 	   		this.become_editing_status()
 			}
 	   if (!focused) {
-	   		this.save_input_data();
+	   		this.save_input_context();
 			}
 	}, self);
 
@@ -86,7 +75,7 @@ Argument_VM.prototype.show_context = function(){
 	var self = this;
 
 	var title = self.argument_obj.get("title");
-	var title_set = self.argument_obj.get("title_set")
+	var title_set = self.argument_obj.get("title_set");
 	var content = self.argument_obj.get("main_content");
 	converted_context = add_linebreak_html(content);
 	var main_content_set = self.argument_obj.get("main_content_set");
@@ -169,7 +158,7 @@ Argument_VM.prototype.click_content_edit = function(){
 Argument_VM.prototype.become_editing_status = function(){
 	var self = this;
 
-	this.textarea_wrapper_css("textarea_wrapper_focused");
+	this.arg_content_wrapper_css("textarea_wrapper_focused");
 	self.visible_button_MainArg_edit(false);
 	self.visible_button_MainArg_save(true);
 	self.visible_MainArg_textbox_written(false);
@@ -181,10 +170,9 @@ Argument_VM.prototype.become_editing_status = function(){
 
 
 
-Argument_VM.prototype.save_input_data = function(){
+Argument_VM.prototype.save_input_context = function(){
 
 	var self = this;
-	//self.textarea_wrapper_css("textarea_wrapper_saved");
 	self.count = 0
 
 	var context = self.main_input();
@@ -214,7 +202,7 @@ Argument_VM.prototype.save_input_data = function(){
 	self.argument_obj.save(null, {
 	  success: function(obj) {
 	    console.log("saved");
-			self.textarea_wrapper_css("textarea_wrapper_saved");
+			self.arg_content_wrapper_css("textarea_wrapper_saved");
 			self.show_save_message();
 			self.check_edit_status();
 	  },
@@ -238,7 +226,7 @@ Argument_VM.prototype.check_edit_status = function(){
 	var title_focused = self.isTitleFocused();
 
 	if(!content_focusd && !title_focused){
-		self.textarea_wrapper_css("textarea_wrapper_default");
+		self.arg_content_wrapper_css("textarea_wrapper_default");
 	  self.visible_MainArg_editing_icon(false);
 		self.visible_button_MainArg_save(false);
 		self.show_context();
@@ -265,7 +253,7 @@ Argument_VM.prototype.input_data_manage = function(data, event, type){
 	console.log(event.keyCode);
 	self.visible_button_MainArg_save(true);
 
-	self.textarea_wrapper_css("textarea_wrapper_updating");
+	self.arg_content_wrapper_css("textarea_wrapper_updating");
 	if(event.keyCode === 32 && self.prev_keycode != 32){ /*space*/
 		self.count++;
 		console.log("space count up");
@@ -285,7 +273,7 @@ Argument_VM.prototype.input_data_manage = function(data, event, type){
   		case "title":
   		break;
   	}
-  	self.save_input_data();
+  	self.save_input_context();
   	self.count = 0;
   }
   self.prev_keycode = event.keyCode;

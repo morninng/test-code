@@ -1,0 +1,195 @@
+<html>
+
+<head>
+ <meta name="viewport" content="width=device-width,initial-scale=1">
+ <meta charset="UTF-8"> 
+ <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+</head>
+
+<body>
+<style>
+p {
+  font-weight:bold;
+}
+
+body {
+  background: #fff;
+  font: 14px sans-serif;
+  line-height:1.7;
+}
+h2 {
+  font-size:100%;
+  padding:15px 3px;
+}
+
+#input_textbox{
+  text-align:center;
+}
+
+ #range_score, #radio_score, #textbox_score{
+    color:red;
+}
+ #range_message, #radio_message, #textbox_message{
+    color:black;
+}
+
+</style>
+
+
+<div>
+    <p>range slider</p>
+    <u>Speaker Score</u> <span id="range_score">75</span> <span id="range_message">average</span><br> 
+    bad <input type="range" name="range2" id="input_range" data-outscore="range_score" data-outmessage="range_message" value="75"　 max="100" min="50" step="0.5">good
+</div>
+<br><br>
+
+  <div>
+    <p>radio button</p>
+    <u>Speaker Score</u> <span id="radio_score">75</span> <span id="radio_message">average</span><br> 
+    bad 
+    <input type="radio" name="input_radio" data-outscore="radio_score" data-outmessage="radio_message" value="70">70 &nbsp;
+    <input type="radio" name="input_radio" data-outscore="radio_score" data-outmessage="radio_message"  value="71">71 &nbsp;
+    <input type="radio" name="input_radio" data-outscore="radio_score" data-outmessage="radio_message" value="72">72 &nbsp;
+    <input type="radio" name="input_radio" data-outscore="radio_score" data-outmessage="radio_message" value="73">73 &nbsp;
+    <input type="radio" name="input_radio" data-outscore="radio_score" data-outmessage="radio_message" value="74">74 &nbsp;
+    <input type="radio" name="input_radio" data-outscore="radio_score" data-outmessage="radio_message" value="75" checked>75 &nbsp;
+    <input type="radio" name="input_radio" data-outscore="radio_score" data-outmessage="radio_message" value="76">76 &nbsp;
+    <input type="radio" name="input_radio" data-outscore="radio_score" data-outmessage="radio_message" value="77">77 &nbsp;
+    <input type="radio" name="input_radio" data-outscore="radio_score" data-outmessage="radio_message" value="78">78 &nbsp;
+    <input type="radio" name="input_radio" data-outscore="radio_score" data-outmessage="radio_message" value="79">79 &nbsp;
+    <input type="radio" name="input_radio" data-outscore="radio_score" data-outmessage="radio_message" value="80">80 &nbsp;
+    good
+  </div>
+
+<br><br>
+
+  <div>
+    <p>text box</p>
+    <u>Speaker Score</u> <br>
+    <input id="input_textbox" type="number" value="75" step="0.5"> &nbsp;<span id="textbox_message">average</span>
+  </div>
+
+
+<script>
+
+$(window).ready(function(){
+
+    $('#input_range').on('input',
+	    function(){
+    		var output_score_element_id = '#'+$(this).attr('data-outscore');
+        var output_message_element_id = '#'+$(this).attr('data-outmessage');
+    		var score = $(this).val();
+        var message = get_message(score);
+    		$(output_score_element_id).html( score);
+        $(output_message_element_id).html( "&nbsp;" + message);
+	    });
+
+    $('[name=input_radio]').click(
+      function() {
+        var output_score_element_id = '#'+$(this).attr('data-outscore');
+        var output_message_element_id = '#'+$(this).attr('data-outmessage');
+        var score = $('[name=input_radio]:checked').val();
+        var message = get_message(score);
+        $(output_score_element_id).html( score);
+        $(output_message_element_id).html( "&nbsp;" + message);
+    });
+
+
+
+    $('#input_textbox').on('change',
+      function(){
+        var message=null;
+        var val = $(this).val();
+        var message = get_message(val)
+        $("#textbox_score").html( message );
+      });
+
+    function get_message(score_str){
+
+        var message="";
+        score = Number(score_str)
+        if(score > 94.5){
+          message="Plausibly one of the very best debating speeches ever given";
+        }else if (score > 89.5){
+          message="Brilliant arguments are extremely well-explained and analysed in great depth";
+        }else if (score > 84.5){
+          message="Very good arguments are highly compelling and analysed deeply";
+        }else if (score > 79.5){
+          message="Consistently relevant arguments set-up or address key issues in the round with a good degree of explanation and analysis";
+        }else if (score > 74.5){
+          message="Arguments are almost exclusively relevant, and frequently persuasive. ";
+        }else if (score > 69.5){
+          message="Arguments are generally relevant, and some explanation of them given";
+        }else if (score > 64.5){
+          message="Relevant arguments are often made, but with limited explanation";
+        }else if (score > 59.5){
+          message="The speaker is often relevant, but rarely makes sustained arguments. F";
+        }else if (score > 54.5){
+          message="The speech rarely makes relevant claims, which are only occasionally formulated as arguments";
+        }else if (score < 55){
+          message="Content is almost never relevant, is both confusing and confused, and is highly limited in quantity.";
+        }
+
+/*
+        if(Number(score) < 70){
+          message="super super poor";
+        }
+        if(Number(score) > 80){
+          message="super super excellent";
+        }
+        switch(score){
+          case "70":
+          case "70.5":
+           message="super poor";
+           break;
+          case "71":
+          case "71.5":
+           message="poor";
+           break;
+          case "72":
+          case "72.5":
+           message="poor";
+           break;
+          case "73":
+          case "73.5":
+           message="below average";
+           break;
+          case "74":
+          case "74.5":
+           message="below average";
+           break;
+          case "75":
+          case "75.5":
+           message="average";
+           break;
+          case "76":
+          case "76.5":
+           message="good";
+           break;
+          case "77":
+          case "77.5":
+           message="good";
+           break;
+          case "78":
+          case "78.5":
+           message="excellent";
+           break;
+          case "79":
+          case "79.5":
+           message="excellent";
+           break;
+          case "80":
+           message="super excellent";
+           break;
+        }
+*/
+      return message;
+    }
+
+});
+
+</script>
+
+
+</body>
+</html>
