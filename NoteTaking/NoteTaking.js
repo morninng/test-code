@@ -34,7 +34,7 @@ NoteTakingTabWrapper.prototype.createDom = function(root_element_name){
 	  var own_role = false;
 	  var title_message_content = null;
 	  if(own_role){
-	  	title_message_content = "Your speech memo as " + self.role_array[i]; 
+	  	title_message_content = "<span class='own_memo_style'>Your speech memo </span> as " + self.role_array[i]; 
 	  }else{
 	  	title_message_content =  self.role_array[i] + " speech"; 
 	  }
@@ -54,6 +54,8 @@ NoteTakingTabWrapper.prototype.createDom = function(root_element_name){
 	  var temp_note_take_el = eval("self.note_take_el_" + self.role_array[i]);
 	  ko.applyBindings(temp_note_take_obj, temp_note_take_el );
 	}
+	self.retrieveData_apply();
+	self.retrieveScore_apply()
 }
 
 
@@ -64,6 +66,15 @@ NoteTakingTabWrapper.prototype.remove = function(){
 		return;
 	}
 
+	for(var i=0; i< self.role_array.length; i++){
+		var temp_note_take_el = eval("self.note_take_el_" + self.role_array[i]);
+  	ko.cleanNode(temp_note_take_el);
+		eval("self.note_take_el_" + self.role_array[i] + " = null");
+  	eval("self.note_take_obj_" + self.role_array[i] + " = null");
+  	temp_note_take_obj = null;
+	}
+	self.root_element.html(null);
+	self.role_array = null;
 }
 
 

@@ -128,7 +128,6 @@
 	text-align:center;
  }
 
-
  .range_score{
 	color:red;
 	font-weight:bold;
@@ -139,8 +138,6 @@
  	font-weight:bold;
  }
 
-
-
 .note_take_textbox_style{
 	padding:10px;
 	border-style: solid;
@@ -148,7 +145,4 @@
 	min-height: 200px;
 	width: 100%;
 	background-color: #FFFFFF;
-
 }
-
-

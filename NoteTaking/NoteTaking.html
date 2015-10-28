@@ -105,23 +105,20 @@
     success: function(obj) {
       actual_game_obj = obj;
 	    note_taking_obj.createDom("#root_element");
-	    note_taking_obj.retrieveData_apply();
-	    note_taking_obj.retrieveScore_apply()
-	    
-//	    ko.applyBindings(after_debate_obj);
-//	    after_debate_obj.show_all();
-//			after_debate_obj.remove();
 
     },
     error: function(error) {
 
     }
   });
-	
+
+function delete_obj(){
+	note_taking_obj.remove();
+}	
 
 </script>
 
-
+<button onClick="delete_obj()">remove</button>
 
 
 </body>

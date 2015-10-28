@@ -1,0 +1,46 @@
+<html>
+<head>
+
+<!--
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+-->
+
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+
+  <script src="./cuttom_tab.js"></script>
+  <link rel="stylesheet" href="./custom_tab.css">
+
+</head>
+<body>
+ 
+
+
+
+	<div class="tab-nav-container">
+		<ul class="nav_tabs_custom">
+		  <li id="First_tab" class="active">
+		  	<a    onclick="ChangeTab('#First_tab', '#First_content');" >AAA</a>
+		  </li>
+		  <li id="Second_tab">
+		  	<a  onclick="ChangeTab('#Second_tab', '#Second_content');" >BBB</a>
+		  </li>
+		  <li id="Third_tab">
+		  	<a  onclick="ChangeTab('#Third_tab', '#Third_content');" >CCC</a>
+		  </li>
+		</ul>
+	</div>
+	<div class="tab_content_custom">  
+		<div class="tab_pane_custom active" id="First_content">
+		  aaa
+		</div>
+		<div class="tab_pane_custom" id="Second_content">
+		  bbb
+		</div>
+		<div class="tab_pane_custom" id="Third_content">
+		   ccc
+		</div>  
+  </div>
+
+</body>
+</html>
