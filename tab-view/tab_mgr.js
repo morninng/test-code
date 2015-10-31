@@ -20,7 +20,6 @@ tabmgr.prototype.createDom = function(el_name){
   var tab_html_text = Tab_Template({list:tab_obj_array});
   self.tab_root_element.html(tab_html_text);
 
-
 }
 
 

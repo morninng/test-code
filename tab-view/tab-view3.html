@@ -16,17 +16,15 @@
 
 
 <script type="text/template" data-template="tab_template">
-	<div class="tab-nav-container">
-		<ul class="nav_tabs_custom">
- 
-		  <% _.each(list, function(e,i){ %>
-			  <li id="<%= e.name %>_tab" class="<%= e.active_str %>">
-			  	<a  onclick="ChangeTab('#<%= e.name %>_tab', '#<%= e.name %>_content');" ><%= e.tab_description %></a>
-			  </li>
-		  <% });%>
+	<ul class="nav_tabs_custom">
 
-		</ul>
-	</div>
+	  <% _.each(list, function(e,i){ %>
+		  <li id="<%= e.name %>_tab" class="<%= e.active_str %>">
+		  	<a  onclick="ChangeTab('#<%= e.name %>_tab', '#<%= e.name %>_content');" ><%= e.tab_description %></a>
+		  </li>
+	  <% });%>
+
+	</ul>
 	<div class="tab_content_custom">
 
 	  <% _.each(list, function(e,i){ %>
