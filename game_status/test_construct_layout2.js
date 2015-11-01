@@ -40,6 +40,9 @@ construct_layout.prototype.construct_layout_debate = function(){
     $("#container_main_left_below").css('display','none');
     $("#container_main").width(1200);
     $("#container_main_right").width(900);
+
+
+
     var DebaterNote_html_Template = _.template($('[data-template="DebaterNote_template"]').html());
     var DebaterNote_element = $("#container_main_right");
     var DebaterNote_html_text = DebaterNote_html_Template();
@@ -105,6 +108,11 @@ construct_layout.prototype.construct_layout_debate = function(){
     chat_view_model.initialize();
     var chat_el = document.getElementById('chat_field');
     ko.applyBindings(chat_view_model, chat_el);
+
+    var top_position = $("#container_main_right").offset().top;
+    var parent_height = $("#whole").parent().height();
+    var adjust_height = parent_height - top_position;
+    $("#container_main_right").height(adjust_height);
 
 
 }
