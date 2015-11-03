@@ -73,63 +73,72 @@
     worker.onmessage = function(e){
       var blob = e.data;
 	  //console.log("the blob " +  blob + " " + blob.size + " " + blob.type);
-
-	  var arrayBuffer;
-	  var fileReader = new FileReader();
-
-	  fileReader.onload = function(){
-		arrayBuffer = this.result;
-		var buffer = new Uint8Array(arrayBuffer),
+	    var arrayBuffer;
+	    var fileReader = new FileReader();
+	    fileReader.onload = function(){
+		    arrayBuffer = this.result;
+		    var buffer = new Uint8Array(arrayBuffer),
         data = parseWav(buffer);
 
-        console.log(data);
-		console.log("Converting to Mp3");
-		log.innerHTML += "\n" + "Converting to Mp3";
+		    console.log("Converting to Mp3");
+		 //   log.innerHTML += "\n" + "Converting to Mp3";
 
         encoderWorker.postMessage({ cmd: 'init', config:{
-            mode : 3,
-			channels:1,
-			samplerate: data.sampleRate,
-			bitrate: data.bitsPerSample
+          mode : 3,
+			    channels:1,
+			    samplerate: data.sampleRate,
+			    bitrate: data.bitsPerSample
         }});
 
         encoderWorker.postMessage({ cmd: 'encode', buf: Uint8ArrayToFloat32Array(data.samples) });
         encoderWorker.postMessage({ cmd: 'finish'});
         encoderWorker.onmessage = function(e) {
-            if (e.data.cmd == 'data') {
+          if (e.data.cmd == 'data') {
 
-				console.log("Done converting to Mp3");
-				log.innerHTML += "\n" + "Done converting to Mp3";
-
+				    console.log("Done converting to Mp3");
+				 //   log.innerHTML += "\n" + "Done converting to Mp3";
 				/*var audio = new Audio();
 				audio.src = 'data:audio/mp3;base64,'+encode64(e.data.buf);
 				audio.play();*/
-
 				//console.log ("The Mp3 data " + e.data.buf);
+						var mp3Blob = new Blob([new Uint8Array(e.data.buf)], {type: 'audio/mp3'});
+						uploadAudio(mp3Blob);
 
-				var mp3Blob = new Blob([new Uint8Array(e.data.buf)], {type: 'audio/mp3'});
-				uploadAudio(mp3Blob);
 
-				var url = 'data:audio/mp3;base64,'+encode64(e.data.buf);
-				var li = document.createElement('li');
-				var au = document.createElement('audio');
-				var hf = document.createElement('a');
+			      var audio_new_file = new File([mp3Blob], "ghi.mp3");
+			      s3.putObject(
+			        {Key: audio_new_file.name, ContentType: audio_new_file.type, Body: audio_new_file, ACL: "public-read"},
+			        function(error, data){
+			          if(data !==null){
+			            console.log("succeed to save data on S3");
+			          }else{
+			            console.log("fai to save data" + error + data);
+			          }
+			        }
+			      );
+   
 
-				au.controls = true;
-				au.src = url;
-				hf.href = url;
-				hf.download = 'audio_recording_' + new Date().getTime() + '.mp3';
-				hf.innerHTML = hf.download;
-				li.appendChild(au);
-				li.appendChild(hf);
-				recordingslist.appendChild(li);
 
-            }
+
+
+
+
+				    var url = 'data:audio/mp3;base64,'+encode64(e.data.buf);
+				    var li = document.createElement('li');
+				    var au = document.createElement('audio');
+				    var hf = document.createElement('a');
+				    au.controls = true;
+				    au.src = url;
+				    hf.href = url;
+				    hf.download = 'audio_recording_' + new Date().getTime() + '.mp3';
+				    hf.innerHTML = hf.download;
+				    li.appendChild(au);
+				    li.appendChild(hf);
+				    recordingslist.appendChild(li);
+          }
         };
-	  };
-
-	  fileReader.readAsArrayBuffer(blob);
-
+	    };
+	    fileReader.readAsArrayBuffer(blob);
       currCallback(blob);
     }
 
@@ -144,6 +153,7 @@
 		}
 		return window.btoa( binary );
 	}
+	
 
 	function parseWav(wav) {
 		function readInt(i, bytes) {
@@ -166,6 +176,7 @@
 			samples: wav.subarray(44)
 		};
 	}
+	
 
 	function Uint8ArrayToFloat32Array(u8a){
 		var f32Buffer = new Float32Array(u8a.length);
@@ -180,11 +191,17 @@
 	function uploadAudio(mp3Data){
 		var reader = new FileReader();
 		reader.onload = function(event){
+
+
+
+
 			var fd = new FormData();
 			var mp3Name = encodeURIComponent('audio_recording_' + new Date().getTime() + '.mp3');
 			console.log("mp3name = " + mp3Name);
 			fd.append('fname', mp3Name);
 			fd.append('data', event.target.result);
+
+			/*
 			$.ajax({
 				type: 'POST',
 				url: 'upload.php',
@@ -195,6 +212,9 @@
 				//console.log(data);
 				log.innerHTML += "\n" + data;
 			});
+
+*/
+
 		};
 		reader.readAsDataURL(mp3Data);
 	}
