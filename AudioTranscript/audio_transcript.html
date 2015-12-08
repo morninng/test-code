@@ -28,7 +28,9 @@
 
 <div class="audio_transcript_containers">
 	<p><%= role %></p>
-	<audio src="aaa.mp3" controls preload="none"></audio>
+	<% if(audio_src){ %>
+	<audio src="<%= audio_src %>" controls preload="none"></audio>
+	<% } %>
 	<div class="transcript_containers">
 		<div class="transcript_body">
 		  <ul class="transcription_ul">

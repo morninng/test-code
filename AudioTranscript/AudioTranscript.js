@@ -51,7 +51,7 @@ AudioTransript.prototype.retrieve_data = function(){
 	var Speech_Transcription = Parse.Object.extend("Speech_Transcription");
 	var speech_transcription_query = new Parse.Query(Speech_Transcription);
 	for(var i=0; i< self.role_array.length; i++){
-  	speech_transcription_query.include(self.role_array[i]);
+		speech_transcription_query.include(self.role_array[i]);
 	}
 
   speech_transcription_query.get(self.transcription_id, {
@@ -77,6 +77,7 @@ AudioTransript.prototype.OrganizeData = function(){
 		transcription_each_role = new Array();
 
 		var transcript_text_obj = self.transcript_obj.get(self.role_array[j]);
+		var audio_src = self.transcript_obj.get(self.role_array[j] + "_Audio");
 		console.log(transcript_text_obj.id);
 		if(transcript_text_obj){
 			console.log(self.role_array[j]);
@@ -90,7 +91,7 @@ AudioTransript.prototype.OrganizeData = function(){
 				);
 				var short_speaker_text = "";
 				for(var i=0; i< filter_trans_array.length; i++){
-					short_speaker_text = short_speaker_text + filter_trans_array[i]["script"];
+					short_speaker_text = short_speaker_text + filter_trans_array[i]["script"] + "<br>";
 					if(i < filter_trans_array.length -1){
 						if(filter_trans_array[i]["short_split_id"] != filter_trans_array[i+1]["short_split_id"] ){
 							var obj = {};
@@ -126,27 +127,24 @@ AudioTransript.prototype.OrganizeData = function(){
 				}
 			}
 		}
-		self.ConstructDom(transcription_each_role, self.role_array[j]);
+		self.ConstructDom(self.role_array[j], audio_src, transcription_each_role );
 	}
 	//console.log(self.transcript_message_array);		
 }
 
 
-
-
-
-
-AudioTransript.prototype.ConstructDom = function(transcription_message_array, speaker_role){
-
+AudioTransript.prototype.ConstructDom = function(speaker_role, in_audio_src, transcription_message_array){
+	
 	var self = this;
-  var Transcript_Template = _.template($("[data-template='AudioTranscript_Template']").html());
-  
-  var transcript_html_text = Transcript_Template({list:transcription_message_array, role:speaker_role });
-  self.root_element.append(transcript_html_text);
+	var Transcript_Template = _.template($("[data-template='AudioTranscript_Template']").html());
+
+	var transcript_html_text = Transcript_Template({role:speaker_role, audio_src:in_audio_src,list:transcription_message_array});
+	self.root_element.append(transcript_html_text);
 
 }
 
 AudioTransript.prototype.removeAll = function(){
 	var self = this;
+	self.root_element.html(null);
 }
 
