@@ -1,7 +1,7 @@
 (function(window){
 
 //  var WORKER_PATH = 'js/recorderWorker.js';
-  var encoderWorker = new Worker('js/mp3Worker.js');
+ // var encoderWorker = new Worker('js/mp3Worker.js');
 
   var Recorder = function(source, cfg){
     var config = cfg || {};
@@ -11,6 +11,7 @@
     this.node = (this.context.createScriptProcessor ||
                  this.context.createJavaScriptNode).call(this.context,
                  bufferLen, numChannels, numChannels);
+                 /*
     var record_worker = new Worker('js/recorderWorker.js');
     record_worker.postMessage({
       command: 'init',
@@ -19,6 +20,7 @@
         numChannels: numChannels
       }
     });
+*/
     var recording = false,
       currCallback;
 
@@ -27,11 +29,11 @@
       var buffer = [];
       for (var channel = 0; channel < numChannels; channel++){
           buffer.push(e.inputBuffer.getChannelData(channel));
-      }
+      }/*
       record_worker.postMessage({
         command: 'record',
         buffer: buffer
-      });
+      });*/
     }
 
     this.configure = function(cfg){
@@ -51,24 +53,26 @@
     }
 
     this.clear = function(){
-      record_worker.postMessage({ command: 'clear' });
+    //  record_worker.postMessage({ command: 'clear' });
     }
 
     this.getBuffer = function(cb) {
       currCallback = cb || config.callback;
-      record_worker.postMessage({ command: 'getBuffer' })
+     // record_worker.postMessage({ command: 'getBuffer' })
     }
 
     this.exportWAV = function(cb, type){
       currCallback = cb || config.callback;
       type = type || config.type || 'audio/wav';
       if (!currCallback) throw new Error('Callback not set');
+/*
       record_worker.postMessage({
         command: 'exportWAV',
         type: type
       });
+      */
     }
-
+/*
 	//Mp3 conversion
     record_worker.onmessage = function(e){
       var blob = e.data;
@@ -97,9 +101,9 @@
 
 				    console.log("Done converting to Mp3");
 				 //   log.innerHTML += "\n" + "Done converting to Mp3";
-				/*var audio = new Audio();
-				audio.src = 'data:audio/mp3;base64,'+encode64(e.data.buf);
-				audio.play();*/
+				//var audio = new Audio();
+				//audio.src = 'data:audio/mp3;base64,'+encode64(e.data.buf);
+				//audio.play();
 				//console.log ("The Mp3 data " + e.data.buf);
 						var mp3Blob = new Blob([new Uint8Array(e.data.buf)], {type: 'audio/mp3'});
 					//	uploadAudio(mp3Blob);
@@ -135,7 +139,7 @@
 	    fileReader.readAsArrayBuffer(blob);
       currCallback(blob);
     }
-
+*/
 
 	function encode64(buffer) {
 		var binary = '',
