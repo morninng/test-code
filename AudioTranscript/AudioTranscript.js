@@ -14,11 +14,11 @@ AudioTransript.prototype.initialize = function(){
 
 	var self = this;
 	//var game_style = actual_game_obj.get("style");
-	var game_style = 'NorthAmerica';
+	var game_style = 'BP';
 
 //  var transcription_obj = actual_game_obj.get("speech_transcription");
 //  self.transcription_id = transcription_obj.id;
-  self.transcription_id = '8lcVcOYc0n';
+  self.transcription_id = 'HAk8Osf6o3';
 
 	switch(game_style){
 	  case 'NorthAmerica':
@@ -78,7 +78,7 @@ AudioTransript.prototype.OrganizeData = function(){
 
 		var transcript_text_obj = self.transcript_obj.get(self.role_array[j]);
 		var audio_src = self.transcript_obj.get(self.role_array[j] + "_Audio");
-		console.log(transcript_text_obj.id);
+		//console.log(transcript_text_obj.id);
 		if(transcript_text_obj){
 			console.log(self.role_array[j]);
 			var transcript_text_array = transcript_text_obj.get("speech_text");
@@ -99,7 +99,7 @@ AudioTransript.prototype.OrganizeData = function(){
 							obj["speaker_role"] = filter_trans_array[i]["type"];
 							var speaker_user_id = filter_trans_array[i]["user_id"];
 							//obj["speaker_name"] = participant_mgr_obj.getFirstName_fromParseID(speaker_user_id);
-							obj["speaker_name"] = "moriyrma";
+							obj["speaker_name"] = "aaa";
 							if(obj["speaker_role"] == "speaker"){
 								obj["transcription_box_class"] = "transcript_speaker";
 							}else{
@@ -115,7 +115,7 @@ AudioTransript.prototype.OrganizeData = function(){
 							obj["speaker_role"] = filter_trans_array[i]["type"];
 							var speaker_user_id = filter_trans_array[i]["user_id"];
 						//	obj["speaker_name"] = participant_mgr_obj.getFirstName_fromParseID(speaker_user_id);
-							obj["speaker_name"] = "yuta";
+							obj["speaker_name"] = "";
 							if(obj["speaker_role"] == "speaker"){
 								obj["transcription_box_class"] = "transcript_speaker";
 							}else{
