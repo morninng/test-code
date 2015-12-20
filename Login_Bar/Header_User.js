@@ -41,7 +41,7 @@ Header_User.prototype.construct_login_dom = function(){
 
 	$("#profile_pict").html("");
 	$("#logout").html("");
-	var login_html = "<input type=button onclick='header_obj.goto_login_page()' value='login' >"
+	var login_html = "<input class='btn btn-success' type=button onclick='header_obj.goto_login_page()' value='login' >"
 	var dom_login = $("#login");
 	dom_login.html(login_html);
 }
