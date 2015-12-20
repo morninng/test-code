@@ -39,10 +39,10 @@ Header_User.prototype.get_value_fromCookie = function(key){
 Header_User.prototype.construct_login_dom = function(){
 	var self = this;
 
-	$("#profile_pict").html("");
-	$("#logout").html("");
+	$("#nav_profile_pict").html("");
+	$("#nav_logout").html("");
 	var login_html = "<input class='btn btn-success' type=button onclick='header_obj.goto_login_page()' value='login' >"
-	var dom_login = $("#login");
+	var dom_login = $("#nav_login");
 	dom_login.html(login_html);
 }
 
@@ -65,9 +65,9 @@ Header_User.prototype.construct_dom_for_logeduser = function(){
 	var link = currentUser.get("link");
 	var profile_picture_src = currentUser.get("Profile_picture");
 
-	$("#login").html("");
-	$("#profile_pict").html("<img src=" + profile_picture_src + ">");
-	$("#logout").html("<a href='javascript:void(0)' onclick='header_obj.logout()'>logout</a>");
+	$("#nav_login").html("");
+	$("#nav_profile_pict").html("<img src=" + profile_picture_src + ">");
+	$("#nav_logout").html("<a href='javascript:void(0)' onclick='header_obj.logout()'>logout</a>");
 	self.validate_user(currentUser);
 
 }
