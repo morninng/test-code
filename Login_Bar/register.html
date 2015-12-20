@@ -18,16 +18,15 @@
 <script type="text/javascript" src="https://www.parsecdn.com/js/parse-1.4.2.min.js"></script>
 
 <script> 
-
+ var lang_type = null;
  Parse.initialize(parse_app_id, parse_js_key);
 
 	function RegistFbGraphData(){
-		FB.api("/me?fields=picture,first_name,last_name,timezone,gender,link",
-			function (response) {
-				if (response && !response.error) {
-					var currentUser = Parse.User.current();
+    FB.api("/me?fields=picture,first_name,last_name,timezone,gender,link",
+      function (response) {
+        if (response && !response.error) {
+          var currentUser = Parse.User.current();
           var ext_data = currentUser.get("ext_data");
-
           if(ext_data){
             var User_Extension = Parse.Object.extend("User_Extension");
             var user_ext_query = new Parse.Query(User_Extension);  
@@ -68,23 +67,28 @@ function update_user_profile(response, currentUser, user_ext){
   currentUser.set("FirstName", response.first_name);
   currentUser.set("LastName", response.last_name);
   currentUser.set("Profile_picture", response.picture.data.url);
-  currentUser.set("ext_data",user_ext)
+  currentUser.set("ext_data",user_ext);
+  if(lang_type){
+    currentUser.set("lang_type",lang_type);
+  }
 
   currentUser.save(null, {
   success: function(){
 
+/*
     var recent_login = get_value_fromCookie("recent_login");
     if(!recent_login){
       var duration = 60000 * 60 * 24 * 30;
       set_cookie("recent_login", "a", duration);
     }
+*/
     if(document.referrer){
       window.location.href = document.referrer;
     }else{
       location.reload();
     }
   },
-  error: function(){
+  error: function(obj,error){
     alert("fail to save");
     window.location.href = "./home";
   }
@@ -97,10 +101,10 @@ function update_user_profile(response, currentUser, user_ext){
   function checkLoginState() {
 
     var lang_radioList = document.getElementsByName("lang_type");
-    var lang_type = null
     for(var i=0; i< lang_radioList.length; i++){
       if(lang_radioList[i].checked){
         lang_type = lang_radioList[i].value;
+        break;
       }
     }
     if(!lang_type){
@@ -123,6 +127,7 @@ function update_user_profile(response, currentUser, user_ext){
     });
   }
 
+/*
 function get_value_fromCookie(key){
 
   var cookie_data = document.cookie;
@@ -136,15 +141,15 @@ function get_value_fromCookie(key){
   }
   return null;
 }
-
+*/
+/*
 function set_cookie(key,value, duration ){
   var dt = new Date();
   dt.setTime(dt.getTime() + duration );
   document.cookie = key + '=' + value + ';  expires=' + dt.toGMTString() + '; path=/';
   return;
 }
-
-
+*/
 
   window.fbAsyncInit = function() {
     Parse.FacebookUtils.init({
